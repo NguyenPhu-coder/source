@@ -1,0 +1,173 @@
+agent:
+  name: "personalization_agent"
+  port: 8009
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+models:
+  qwen:
+    model_path: "gpt2" # Using GPT-2 instead of Qwen2.5-3B to save memory (548MB vs 8.89GB)
+    device: "cpu" # Force CPU to avoid CUDA errors
+    max_length: 1024 # GPT-2 max context
+    temperature: 0.7
+    top_p: 0.9
+    max_new_tokens: 256 # Reduced for GPT-2
+    cache_dir: "./models"
+
+personalization:
+  factors:
+    - grade_level
+    - interests
+    - learning_style # visual, auditory, kinesthetic
+    - culture
+    - language
+    - difficulty_preference
+
+  content_types:
+    - examples
+    - analogies
+    - mnemonics
+    - summaries
+    - practice_problems
+
+  adaptation_strategies:
+    interest_based: true
+    culture_aware: true
+    difficulty_scaling: true
+    style_matching: true
+
+  learning_styles:
+    - visual
+    - auditory
+    - kinesthetic
+    - reading_writing
+
+  difficulty_levels:
+    - beginner
+    - intermediate
+    - advanced
+
+  cultures:
+    - general
+    - asian
+    - western
+    - middle_eastern
+    - african
+    - latin_american
+
+  languages:
+    - en
+    - vi
+    - es
+    - fr
+    - de
+    - zh
+    - ja
+    - ko
+
+  grade_levels:
+    - "K"
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+    - "5"
+    - "6"
+    - "7"
+    - "8"
+    - "9"
+    - "10"
+    - "11"
+    - "12"
+    - "college"
+
+knowledge_graph_api:
+  base_url: "http://knowledge-graph:8010"
+  endpoints:
+    user_profile: "/users/{user_id}"
+    learning_history: "/learning-history/{user_id}"
+    mastery: "/mastery/{user_id}"
+  timeout: 30
+  retry: 3
+  retry_delay: 1
+
+caching_api:
+  base_url: "http://caching:8015"
+  endpoints:
+    get: "/get/{key}"
+    set: "/set"
+    delete: "/delete/{key}"
+  ttl: 3600 # 1 hour
+  timeout: 10
+
+feedback:
+  format: "glows_and_grows"
+  tone: "supportive"
+  include_encouragement: true
+  max_length: 500
+
+content_generation:
+  max_retries: 3
+  timeout: 60
+  batch_size: 1
+  enable_caching: true
+
+cultural_sensitivity:
+  enable: true
+  avoid_references:
+    asian:
+      - pork
+      - beef
+    middle_eastern:
+      - pork
+      - alcohol
+    general: []
+
+  preferred_contexts:
+    asian:
+      - family
+      - community
+      - respect
+      - harmony
+      - education
+    middle_eastern:
+      - tradition
+      - faith
+      - community
+      - hospitality
+    western:
+      - individual
+      - innovation
+      - freedom
+      - achievement
+    general:
+      - learning
+      - growth
+      - achievement
+      - curiosity
+
+vocabulary_adaptation:
+  beginner:
+    max_syllables: 2
+    max_sentence_length: 10
+    avoid_complex_words: true
+
+  intermediate:
+    max_syllables: 3
+    max_sentence_length: 15
+    avoid_complex_words: false
+
+  advanced:
+    max_syllables: 5
+    max_sentence_length: 25
+    avoid_complex_words: false
+
+monitoring:
+  enable_metrics: true
+  log_level: "info"
+  metrics_port: 8002
+
+logging:
+  level: "info"
+  format: "json"
+  output: "stdout"

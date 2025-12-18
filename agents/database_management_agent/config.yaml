@@ -1,0 +1,236 @@
+agent:
+  name: "database_management_agent"
+  version: "1.0.0"
+  port: 8015
+  host: "0.0.0.0"
+
+postgresql:
+  host: "postgres"
+  port: 5432
+  database: "learndb"
+  user: "learnuser"
+  password: "learnpass"
+
+  connection_pool:
+    min_size: 10
+    max_size: 50
+    timeout: 30
+
+  query_timeout: 30
+
+  # Optional: Read replicas for load balancing
+  read_replicas: []
+    # - host: "replica1.example.com"
+    #   port: 5432
+    #   database: "learn_your_way"
+    #   user: "postgres"
+    #   password: "${POSTGRES_PASSWORD}"
+
+schemas:
+  - users
+  - sessions
+  - files
+  - progress
+  - achievements
+  - courses
+  - assessments
+  - analytics
+  - notifications
+
+migrations:
+  directory: "./migrations"
+  auto_migrate: true
+  backup_before_migrate: true
+  version_table: "alembic_version"
+
+transactions:
+  isolation_level: "read_committed" # read_uncommitted, read_committed, repeatable_read, serializable
+  max_retries: 3
+  retry_delay: 1 # seconds
+
+  # Deadlock detection
+  deadlock_timeout: 5 # seconds
+
+optimization:
+  enable_query_cache: true
+  prepared_statements: true
+  index_suggestions: true
+  slow_query_log: true
+  slow_query_threshold_ms: 1000
+
+  # Query analysis
+  explain_analyze_threshold_ms: 5000
+
+  # Statement timeout
+  statement_timeout: 30000 # milliseconds
+
+backup:
+  enable: true
+  schedule: "0 2 * * *" # 2 AM daily (cron format)
+  retention_days: 30
+  location: "./backups"
+
+  # Backup options
+  compress: true
+  format: "custom" # plain, custom, directory, tar
+
+  # S3 backup (optional)
+  s3_backup:
+    enable: false
+    bucket: "my-db-backups"
+    region: "us-east-1"
+    prefix: "learn_your_way/"
+
+caching:
+  enable: true
+  redis_url: "redis://localhost:6379/0"
+  query_cache_ttl: 300 # seconds
+
+  # Cache invalidation
+  invalidate_on_write: true
+
+  # Cache key prefix
+  key_prefix: "db_cache:"
+
+monitoring:
+  enable: true
+
+  # Metrics collection
+  collect_query_stats: true
+  collect_connection_stats: true
+  collect_table_stats: true
+
+  # Alerting thresholds
+  alerts:
+    connection_pool_usage: 0.8 # Alert if > 80% used
+    slow_query_count: 10 # Alert if > 10 slow queries/minute
+    error_rate: 0.05 # Alert if > 5% error rate
+
+  # Prometheus metrics
+  prometheus:
+    enable: false
+    port: 9090
+
+logging:
+  level: "INFO" # DEBUG, INFO, WARNING, ERROR
+  format: "json" # json, text
+
+  # Log queries
+  log_queries: false
+  log_slow_queries: true
+  log_errors: true
+
+  # Log file
+  log_file: "./logs/database_agent.log"
+  max_file_size_mb: 100
+  backup_count: 10
+
+security:
+  # SSL/TLS
+  ssl_mode: "prefer" # disable, allow, prefer, require, verify-ca, verify-full
+  ssl_cert: null
+  ssl_key: null
+  ssl_root_cert: null
+
+  # Connection encryption
+  encrypt_connections: true
+
+  # Query validation
+  validate_queries: true
+  block_dangerous_queries: true
+
+  # Dangerous patterns to block
+  blocked_patterns:
+    - "DROP DATABASE"
+    - "DROP SCHEMA"
+    - "TRUNCATE.*CASCADE"
+
+maintenance:
+  # Auto-vacuum
+  auto_vacuum: true
+  vacuum_schedule: "0 3 * * *" # 3 AM daily
+
+  # Statistics update
+  auto_analyze: true
+  analyze_schedule: "0 4 * * *" # 4 AM daily
+
+  # Index maintenance
+  auto_reindex: false
+  reindex_schedule: "0 5 * * 0" # 5 AM every Sunday
+
+performance:
+  # Connection pooling
+  pool_recycle: 3600 # Recycle connections after 1 hour
+  pool_pre_ping: true # Test connections before using
+
+  # Query execution
+  cursor_arraysize: 1000
+  stream_results: true
+
+  # Batch operations
+  batch_size: 1000
+  max_batch_size: 10000
+
+data_retention:
+  # Automatic data cleanup
+  enable: false
+
+  policies:
+    - table: "sessions"
+      column: "created_at"
+      retention_days: 30
+
+    - table: "logs"
+      column: "timestamp"
+      retention_days: 90
+
+    - table: "analytics_events"
+      column: "event_time"
+      retention_days: 365
+
+connection_limits:
+  # Per-user limits
+  max_connections_per_user: 10
+
+  # Per-application limits
+  max_connections_per_app: 50
+
+  # Global limits
+  max_total_connections: 100
+
+query_patterns:
+  # Common query templates
+  user_queries:
+    get_by_id: "SELECT * FROM users WHERE id = $1"
+    get_by_email: "SELECT * FROM users WHERE email = $1"
+    update_profile: "UPDATE users SET name = $1, email = $2 WHERE id = $3"
+
+  session_queries:
+    create: "INSERT INTO sessions (user_id, token, expires_at) VALUES ($1, $2, $3)"
+    get_active: "SELECT * FROM sessions WHERE token = $1 AND expires_at > NOW()"
+    delete_expired: "DELETE FROM sessions WHERE expires_at < NOW()"
+
+table_partitioning:
+  # Partition configuration
+  enable: false
+
+  partitions:
+    - table: "analytics_events"
+      type: "range" # range, list, hash
+      column: "event_time"
+      interval: "1 month"
+
+replication:
+  # Replication settings
+  enable: false
+
+  # Streaming replication
+  streaming:
+    enable: false
+    standby_servers: []
+
+  # Logical replication
+  logical:
+    enable: false
+    publications: []
+    subscriptions: []

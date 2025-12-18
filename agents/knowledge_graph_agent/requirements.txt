@@ -1,0 +1,5 @@
+# Knowledge Graph Agent
+-r requirements-base.txt
+
+# Graph specific
+networkx==3.2.1

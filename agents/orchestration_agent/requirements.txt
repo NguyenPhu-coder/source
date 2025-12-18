@@ -1,0 +1,5 @@
+# Orchestration Agent - Core coordinator
+-r requirements-base.txt
+
+# Additional for orchestration
+celery==5.3.4

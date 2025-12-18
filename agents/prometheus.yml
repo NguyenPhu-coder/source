@@ -1,0 +1,111 @@
+# Prometheus Configuration for Learn Your Way Platform
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Orchestration Agent
+  - job_name: 'orchestration-agent'
+    static_configs:
+      - targets: ['orchestration-agent:8000']
+    metrics_path: '/metrics'
+
+  # Knowledge Graph Agent
+  - job_name: 'knowledge-graph-agent'
+    static_configs:
+      - targets: ['knowledge-graph-agent:8010']
+    metrics_path: '/metrics'
+
+  # Content Ingestion Agent
+  - job_name: 'content-ingestion-agent'
+    static_configs:
+      - targets: ['content-ingestion-agent:8001']
+    metrics_path: '/metrics'
+
+  # Personalization Agent
+  - job_name: 'personalization-agent'
+    static_configs:
+      - targets: ['personalization-agent:8009']
+    metrics_path: '/metrics'
+
+  # Assessment Agent
+  - job_name: 'assessment-agent'
+    static_configs:
+      - targets: ['assessment-agent:8008']
+    metrics_path: '/metrics'
+
+  # Analytics Agent
+  - job_name: 'analytics-agent'
+    static_configs:
+      - targets: ['analytics-agent:8011']
+    metrics_path: '/metrics'
+
+  # Visual Generation Agent
+  - job_name: 'visual-generation-agent'
+    static_configs:
+      - targets: ['visual-generation-agent:8020']
+    metrics_path: '/metrics'
+
+  # Audio Generation Agent
+  - job_name: 'audio-generation-agent'
+    static_configs:
+      - targets: ['audio-generation-agent:8021']
+    metrics_path: '/metrics'
+
+  # Translation Agent
+  - job_name: 'translation-agent'
+    static_configs:
+      - targets: ['translation-agent:8022']
+    metrics_path: '/metrics'
+
+  # Mind Map Agent
+  - job_name: 'mindmap-agent'
+    static_configs:
+      - targets: ['mindmap-agent:8023']
+    metrics_path: '/metrics'
+
+  # Learning Science Agent
+  - job_name: 'learning-science-agent'
+    static_configs:
+      - targets: ['learning-science-agent:8030']
+    metrics_path: '/metrics'
+
+  # Caching Agent
+  - job_name: 'caching-agent'
+    static_configs:
+      - targets: ['caching-agent:8015']
+    metrics_path: '/metrics'
+
+  # Database Management Agent
+  - job_name: 'database-management-agent'
+    static_configs:
+      - targets: ['database-management-agent:8016']
+    metrics_path: '/metrics'
+
+  # Security Compliance Agent
+  - job_name: 'security-compliance-agent'
+    static_configs:
+      - targets: ['security-compliance-agent:8017']
+    metrics_path: '/metrics'
+
+  # Realtime Coordination Agent
+  - job_name: 'realtime-coordination-agent'
+    static_configs:
+      - targets: ['realtime-coordination-agent:8018']
+    metrics_path: '/metrics'
+
+  # Infrastructure Agent
+  - job_name: 'infrastructure-agent'
+    static_configs:
+      - targets: ['infrastructure-agent:8019']
+    metrics_path: '/metrics'
+
+  # Infrastructure Services
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']

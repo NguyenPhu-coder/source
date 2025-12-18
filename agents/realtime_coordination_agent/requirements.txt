@@ -1,0 +1,5 @@
+# Realtime Coordination Agent
+-r requirements-base.txt
+
+# WebSocket support already in uvicorn[standard]
+# Already included in base

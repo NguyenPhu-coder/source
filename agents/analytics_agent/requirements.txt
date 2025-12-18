@@ -1,0 +1,7 @@
+# Analytics Agent
+-r requirements-base.txt
+
+# Data analysis
+numpy==1.26.2
+pandas==2.1.3
+scikit-learn==1.3.2

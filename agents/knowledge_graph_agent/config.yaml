@@ -1,0 +1,85 @@
+# Knowledge Graph Agent Configuration
+
+agent:
+  name: "knowledge_graph_agent"
+  port: 8010
+  host: "0.0.0.0"
+  version: "1.0.0"
+  description: "Neo4j-based knowledge graph management agent"
+
+neo4j:
+  uri: "bolt://neo4j:7687"
+  user: "neo4j"
+  password: "learnpass123"
+  database: "neo4j"
+  max_connection_pool_size: 50
+  connection_timeout: 30
+  max_transaction_retry_time: 30
+  encrypted: false
+
+node_types:
+  - Concept
+  - User
+  - Content
+  - Quiz
+  - LearningPath
+
+relationship_types:
+  - PREREQUISITE_OF
+  - LEARNS
+  - STRUGGLES_WITH
+  - MASTERS
+  - BELONGS_TO
+  - COLLABORATES_WITH
+
+graph_algorithms:
+  - shortest_path
+  - page_rank
+  - community_detection
+  - similarity
+
+caching:
+  enable: true
+  ttl: 300
+  redis_url: "redis://localhost:6379"
+  max_cached_queries: 1000
+
+performance:
+  batch_size: 100
+  max_concurrent_queries: 10
+  query_timeout: 30
+
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  log_level: "INFO"
+  log_format: "json"
+
+indexes:
+  - label: Concept
+    property: id
+  - label: User
+    property: id
+  - label: Content
+    property: id
+  - label: Quiz
+    property: id
+  - label: LearningPath
+    property: id
+
+constraints:
+  - label: Concept
+    property: id
+    type: unique
+  - label: User
+    property: id
+    type: unique
+  - label: Content
+    property: id
+    type: unique
+  - label: Quiz
+    property: id
+    type: unique
+  - label: LearningPath
+    property: id
+    type: unique

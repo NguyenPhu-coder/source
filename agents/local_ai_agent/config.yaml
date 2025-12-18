@@ -1,0 +1,136 @@
+agent:
+  name: "local_ai_agent"
+  version: "1.0.0"
+  port: 8024
+  host: "127.0.0.1" # localhost only for security
+
+models:
+  ollama:
+    base_url: "http://localhost:11434"
+    model: "llama3:8b"
+    temperature: 0.7
+    context_length: 4096
+
+  quantization:
+    enable: true
+    bits: 4 # 4-bit or 8-bit quantization
+    gpu_memory_fraction: 0.8
+
+privacy:
+  compliance:
+    - GDPR
+    - COPPA
+    - FERPA
+
+  sensitive_data_types:
+    - student_personal_info
+    - learning_difficulties
+    - behavioral_data
+    - family_information
+
+  encryption:
+    enable: true
+    algorithm: "AES-256"
+    key_rotation_days: 90
+
+offline_mode:
+  enable: true
+  cache_responses: true
+  cache_ttl: 86400 # 24 hours
+  fallback_behavior: "cached_only" # cached_only, error, generic_response
+
+data_retention:
+  log_queries: false
+  store_sensitive_data: false
+  auto_delete_after_days: 0 # immediate deletion
+
+resource_management:
+  max_concurrent_requests: 4
+  gpu_memory_limit_gb: 8
+  cpu_fallback: true
+
+# Privacy patterns for detection
+privacy_patterns:
+  student_personal_info:
+    - "ssn"
+    - "social security"
+    - "student id"
+    - "phone number"
+    - "email"
+    - "address"
+    - "birthdate"
+    - "date of birth"
+
+  learning_difficulties:
+    - "learning disability"
+    - "special needs"
+    - "iep"
+    - "504 plan"
+    - "dyslexia"
+    - "adhd"
+    - "autism"
+    - "accommodations"
+
+  behavioral_data:
+    - "suspension"
+    - "detention"
+    - "disciplinary"
+    - "behavior report"
+    - "incident report"
+    - "counseling"
+    - "mental health"
+
+  family_information:
+    - "parent"
+    - "guardian"
+    - "family income"
+    - "custody"
+    - "home situation"
+    - "family status"
+
+# Compliance requirements
+compliance_requirements:
+  GDPR:
+    consent_required: true
+    data_retention_policy: true
+    right_to_erasure: true
+    data_portability: true
+
+  COPPA:
+    age_verification: true
+    parental_consent_under_13: true
+    limited_data_collection: true
+
+  FERPA:
+    legitimate_educational_interest: true
+    student_record_protection: true
+    parent_access_rights: true
+
+# Anonymization fields
+anonymization:
+  default_fields:
+    - name
+    - email
+    - phone
+    - address
+    - ssn
+    - student_id
+    - parent_name
+    - guardian_name
+    - family_info
+
+  hash_algorithm: "sha256"
+  preserve_format: true
+
+# Cache management
+cache:
+  max_entries: 1000
+  eviction_policy: "lru" # lru, fifo, lfu
+  compression: true
+
+# Logging (minimal for privacy)
+logging:
+  level: "INFO"
+  sensitive_data_logging: false
+  audit_trail: true
+  log_retention_days: 30

@@ -1,0 +1,206 @@
+agent:
+  name: "learning_science_agent"
+  port: 8012
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+theories:
+  # Dual Coding Theory - combine text and visual information
+  dual_coding:
+    enable: true
+    text_visual_ratio: 0.6 # 60% text, 40% visual
+    enforce_multimodal: true
+    visual_types:
+      - diagram
+      - chart
+      - image
+      - animation
+      - video
+
+  # Spaced Repetition - optimize review timing
+  spaced_repetition:
+    algorithm: "sm2" # SuperMemo 2
+    initial_interval: 1 # days
+    intervals: [1, 3, 7, 14, 30, 90, 180] # Standard intervals
+    min_easiness_factor: 1.3
+    max_easiness_factor: 2.5
+    quality_threshold: 3 # Minimum quality for successful recall
+
+  # Cognitive Load Theory - manage information processing
+  cognitive_load:
+    max_elements_per_chunk: 7 # Miller's Law (7±2)
+    working_memory_capacity: 4 # Cowan's estimate
+    difficulty_threshold: 0.7
+    complexity_factors:
+      - sentence_length
+      - concept_density
+      - content_length
+      - vocabulary_difficulty
+
+  # Bloom's Taxonomy - learning progression
+  blooms_taxonomy:
+    enforce_progression: true
+    mastery_threshold: 0.7 # Required mastery before advancing
+    max_level_jump: 2 # Maximum levels to skip
+    levels:
+      - remember
+      - understand
+      - apply
+      - analyze
+      - evaluate
+      - create
+
+    level_characteristics:
+      remember:
+        verbs: ["define", "list", "recall", "identify"]
+        mastery_threshold: 0.6
+      understand:
+        verbs: ["explain", "summarize", "describe", "interpret"]
+        mastery_threshold: 0.7
+      apply:
+        verbs: ["use", "demonstrate", "solve", "compute"]
+        mastery_threshold: 0.75
+      analyze:
+        verbs: ["compare", "contrast", "examine", "categorize"]
+        mastery_threshold: 0.8
+      evaluate:
+        verbs: ["judge", "critique", "assess", "justify"]
+        mastery_threshold: 0.85
+      create:
+        verbs: ["design", "construct", "develop", "invent"]
+        mastery_threshold: 0.9
+
+scheduling:
+  # Review scheduling parameters
+  review_window_days: 7
+  daily_study_limit_minutes: 120 # 2 hours
+  session_break_minutes: 5
+  optimal_session_length: 25 # Pomodoro technique
+
+  # Session planning
+  sessions_per_day: 4 # Based on daily limit and session length
+  break_between_sessions: 10 # minutes
+  long_break_after_sessions: 4 # After this many sessions
+  long_break_duration: 30 # minutes
+
+  # Timing preferences
+  optimal_times:
+    - "09:00" # Morning
+    - "14:00" # Early afternoon
+    - "19:00" # Evening
+
+  avoid_times:
+    - "12:00-13:00" # Lunch
+    - "22:00-06:00" # Sleep
+
+retention:
+  # Retention improvement targets
+  target_improvement: 0.11 # 11% improvement goal
+  baseline_period_days: 30
+  measurement_interval_days: 30
+  intervention_threshold: 0.6
+
+  # Forgetting curve parameters
+  forgetting_curve:
+    default_stability: 2.5 # Days
+    min_stability: 1.0
+    max_stability: 30.0
+    target_retention: 0.8 # 80%
+
+  # Intervention triggers
+  interventions:
+    low_performance:
+      threshold: 0.4
+      type: "tutoring"
+    moderate_performance:
+      threshold: 0.6
+      type: "additional_practice"
+    high_errors:
+      threshold: 3 # Average errors
+      type: "remedial_content"
+
+knowledge_graph_api:
+  # Knowledge graph service connection
+  base_url: "http://knowledge-graph-agent:8010"
+  timeout: 30 # seconds
+
+  # API endpoints
+  endpoints:
+    update_mastery: "/users/{user_id}/mastery"
+    get_concept: "/concepts/{concept_id}"
+    get_prerequisites: "/concepts/{concept_id}/prerequisites"
+
+  # Retry settings
+  max_retries: 3
+  retry_delay: 1 # seconds
+
+database:
+  # SQLite database settings
+  type: "sqlite"
+  path: "learning_science.db"
+
+  # Connection pooling
+  pool_size: 5
+  max_overflow: 10
+  pool_timeout: 30
+
+  # Tables
+  tables:
+    - review_schedules
+    - performance_records
+    - retention_metrics
+    - intervention_logs
+
+monitoring:
+  # Prometheus metrics
+  enable_metrics: true
+  metrics_port: 9092
+
+  # Logging
+  log_level: "INFO" # DEBUG, INFO, WARNING, ERROR
+  log_format: "json" # json or text
+
+  # Health check
+  health_check_interval: 30 # seconds
+
+performance:
+  # Performance optimization
+  batch_size: 100
+  cache_enabled: true
+  cache_ttl: 300 # seconds
+
+  # Database optimization
+  query_timeout: 30 # seconds
+  index_maintenance: true
+
+analytics:
+  # Learning analytics
+  track_metrics:
+    - learning_velocity
+    - retention_rate
+    - error_rate
+    - session_duration
+    - concept_mastery
+
+  # Velocity calculation
+  velocity:
+    window_days: 7
+    min_sessions: 3
+
+  # Reports
+  generate_reports: true
+  report_frequency_days: 7
+
+features:
+  # Feature flags
+  enable_spaced_repetition: true
+  enable_cognitive_load_management: true
+  enable_blooms_validation: true
+  enable_interventions: true
+  enable_study_planning: true
+
+  # Experimental features
+  experimental:
+    adaptive_difficulty: false
+    peer_comparison: false
+    gamification: false

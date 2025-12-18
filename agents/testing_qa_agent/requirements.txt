@@ -1,0 +1,6 @@
+# Testing QA Agent
+-r requirements-base.txt
+
+# Testing libraries
+pytest==7.4.3
+pytest-asyncio==0.21.1

@@ -1,0 +1,122 @@
+agent:
+  name: "assessment_agent"
+  port: 8008
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+models:
+  t5:
+    model_path: "t5-base"
+    device: "cuda" # cuda or cpu
+    max_length: 512
+    num_beams: 4
+    cache_dir: "./models"
+
+question_generation:
+  types:
+    - multiple_choice
+    - short_answer
+    - true_false
+    - fill_in_blank
+    - open_ended
+
+  bloom_levels:
+    - remember
+    - understand
+    - apply
+    - analyze
+    - evaluate
+    - create
+
+  difficulty_levels: [1, 2, 3, 4, 5]
+  num_distractors: 3
+
+  templates:
+    remember:
+      keywords: ["what", "who", "when", "where", "define", "list", "identify"]
+    understand:
+      keywords: ["explain", "describe", "summarize", "interpret", "compare"]
+    apply:
+      keywords: ["apply", "use", "demonstrate", "solve", "calculate"]
+    analyze:
+      keywords: ["analyze", "examine", "compare", "contrast", "distinguish"]
+    evaluate:
+      keywords: ["evaluate", "assess", "judge", "critique", "justify"]
+    create:
+      keywords: ["create", "design", "develop", "construct", "formulate"]
+
+validation:
+  min_quality_score: 0.7
+  check_prerequisites: true
+  verify_answer_key: true
+  min_question_length: 10
+  max_question_length: 500
+
+  quality_metrics:
+    - clarity
+    - relevance
+    - difficulty_calibration
+    - distractor_quality
+    - answer_key_validity
+
+adaptive_testing:
+  enable_irt: true # Item Response Theory
+  initial_difficulty: 3
+  initial_theta: 0.0 # Initial ability estimate
+  adjustment_step: 0.5
+  max_theta: 3.0
+  min_theta: -3.0
+
+  irt_parameters:
+    discrimination: 1.0 # a parameter
+    guessing: 0.0 # c parameter (0 for no guessing)
+
+  stopping_criteria:
+    min_questions: 5
+    max_questions: 20
+    target_standard_error: 0.3
+
+grading:
+  partial_credit: true
+  partial_credit_threshold: 0.4 # Minimum overlap for partial credit
+
+  feedback_templates:
+    correct: "Correct! Well done."
+    incorrect: "Incorrect. The correct answer is: {answer}"
+    partial: "Partially correct. (Score: {score})"
+
+  remediation:
+    enable: true
+    include_hints: true
+    include_resources: true
+
+knowledge_graph_api:
+  base_url: "http://knowledge-graph:8010"
+  endpoints:
+    concept: "/concepts/{concept_id}"
+    prerequisites: "/prerequisites/{concept_id}"
+  timeout: 30
+  retry: 3
+
+analytics_api:
+  base_url: "http://analytics:8011"
+  endpoints:
+    performance: "/performance/{user_id}"
+    mastery: "/mastery/{user_id}/{concept_id}"
+  timeout: 30
+
+question_bank:
+  database_path: "questions.db"
+  cache_size: 1000
+  auto_cleanup: true
+  cleanup_days: 90
+
+monitoring:
+  enable_metrics: true
+  log_level: "info"
+  metrics_port: 8003
+
+logging:
+  level: "info"
+  format: "json"
+  output: "stdout"

@@ -1,0 +1,96 @@
+agent:
+  name: "visual_generation_agent"
+  port: 8020
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+models:
+  stable_diffusion:
+    model: "stabilityai/sdxl-turbo"
+    scheduler: "LCMScheduler"
+    device: "cuda" # or "cpu"
+    inference_steps: 4
+    guidance_scale: 1.0
+    enable_xformers: true
+
+  lora:
+    enable: true
+    model: "latent-consistency/lcm-lora-sdxl"
+
+generation:
+  default_size: [768, 768]
+  formats: ["png", "jpg", "svg"]
+  max_batch_size: 4
+  timeout: 5 # seconds
+
+  styles:
+    - realistic
+    - cartoon
+    - diagram
+    - infographic
+    - sketch
+
+safety:
+  content_filter: true
+  age_appropriate: true
+  educational_only: true
+
+  forbidden_keywords:
+    - violence
+    - weapon
+    - gore
+    - blood
+    - sexy
+    - nude
+    - naked
+    - sexual
+    - adult content
+    - gambling
+    - alcohol
+    - drugs
+    - inappropriate
+
+  educational_keywords:
+    - learn
+    - education
+    - study
+    - diagram
+    - concept
+    - illustration
+    - textbook
+    - teaching
+    - classroom
+    - academic
+
+storage:
+  type: "s3" # or "local"
+  bucket: "learn-your-way-images"
+  cdn_url: "https://cdn.learnyourway.com"
+  compression: 85 # JPEG quality
+  local_path: "./storage/images" # for local storage
+  cache_size: 1000
+
+# CDN Configuration
+cdn:
+  cache_control: "public, max-age=31536000"
+  enable_cloudfront: true
+  cloudfront_distribution: "E1234EXAMPLE"
+
+# Watermark Configuration
+watermark:
+  enabled: true
+  text: "LearnYourWay.com"
+  opacity: 0.5
+  position: "bottom-right"
+  font_size_ratio: 40 # image_width / font_size_ratio
+
+# Monitoring
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9090
+
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"

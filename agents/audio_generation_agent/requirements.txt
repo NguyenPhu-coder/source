@@ -1,0 +1,12 @@
+# Audio Generation Agent - HEAVY (TTS models)
+-r requirements-base.txt
+
+# Audio processing
+pydub==0.25.1
+numpy==1.26.2
+
+# TTS (would need actual TTS library like Coqui TTS or Piper)
+# For now using basic audio processing
+
+# S3/CDN
+boto3==1.34.10

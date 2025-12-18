@@ -1,0 +1,133 @@
+agent:
+  name: "translation_agent"
+  port: 8022
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+models:
+  mbart:
+    model_path: "facebook/mbart-large-50-many-to-many-mmt"
+    device: "cuda" # or "cpu"
+    max_length: 512
+    num_beams: 5
+
+  language_detector:
+    model: "fasttext"
+    model_path: "models/lid.176.bin"
+    threshold: 0.8
+
+languages:
+  supported:
+    - en # English
+    - vi # Vietnamese
+    - zh # Chinese
+    - es # Spanish
+    - fr # French
+    - de # German
+    - ja # Japanese
+    - ko # Korean
+    - th # Thai
+    - ar # Arabic
+    - ru # Russian
+    - pt # Portuguese
+    - it # Italian
+    - nl # Dutch
+    - pl # Polish
+    - tr # Turkish
+    - hi # Hindi
+    - id # Indonesian
+
+  regional_variants:
+    en:
+      - US # United States
+      - UK # United Kingdom
+      - AU # Australia
+      - CA # Canada
+
+    zh:
+      - CN # Mainland China (Simplified)
+      - TW # Taiwan (Traditional)
+      - HK # Hong Kong (Traditional)
+
+    es:
+      - ES # Spain
+      - MX # Mexico
+      - AR # Argentina
+      - CO # Colombia
+
+    pt:
+      - BR # Brazil
+      - PT # Portugal
+
+    fr:
+      - FR # France
+      - CA # Canada
+
+translation:
+  preserve_formatting: true
+  handle_markdown: true
+  handle_latex: true
+  keep_technical_terms: true
+  consistency_check: true
+
+cultural_adaptation:
+  enable: true
+  localize_examples: true
+  adapt_measurements: true # km/miles, Celsius/Fahrenheit
+  adjust_currency: true # USD, EUR, etc.
+  adapt_date_format: true # MM/DD/YYYY vs DD/MM/YYYY
+
+  # Cultural mappings
+  measurement_systems:
+    imperial: ["us", "uk"]
+    metric: ["cn", "vi", "es", "fr", "de", "jp", "kr"]
+
+terminology:
+  database: "/data/terminology.db"
+
+  domains:
+    - math
+    - science
+    - history
+    - language
+    - geography
+    - technology
+    - medicine
+    - law
+
+  consistency_check: true
+  auto_update: true
+
+quality:
+  min_confidence: 0.7
+  back_translation_check: false # Enable for critical translations
+  human_review_threshold: 0.5
+
+  validation_checks:
+    - length_ratio
+    - special_characters
+    - formatting_preservation
+    - terminology_consistency
+
+# Translation memory
+memory:
+  enabled: true
+  cache_size: 10000
+  ttl: 86400 # 24 hours
+
+# Batch processing
+batch:
+  max_batch_size: 100
+  timeout: 60 # seconds
+  parallel_workers: 4
+
+# Monitoring
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9092
+
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"

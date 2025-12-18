@@ -1,0 +1,80 @@
+# Content Ingestion Agent Configuration
+
+agent:
+  name: "content_ingestion_agent"
+  port: 8001
+  host: "0.0.0.0"
+  version: "1.0.0"
+  description: "Multi-modal content processing with ML models"
+
+models:
+  minicpm_v:
+    model_path: "openbmb/MiniCPM-V-2"
+    device: "cpu"  # or "cuda" for GPU
+    batch_size: 4
+    max_length: 512
+    
+  distilbert:
+    model_path: "distilbert-base-uncased"
+    num_labels: 10
+    subjects:
+      - math
+      - science
+      - history
+      - language
+      - arts
+      - technology
+      - social_studies
+      - physical_education
+      - music
+      - general
+      
+  ner:
+    model_path: "dslim/bert-base-NER"
+    aggregation_strategy: "simple"
+    
+  zero_shot:
+    model_path: "facebook/bart-large-mnli"
+    max_length: 1024
+
+file_processing:
+  supported_formats:
+    - pdf
+    - docx
+    - pptx
+  max_file_size_mb: 50
+  temp_dir: "/tmp/ingestion"
+  output_dir: "/data/processed"
+  enable_ocr: true
+  ocr_language: "eng"
+
+extraction:
+  min_confidence: 0.7
+  concept_extraction_method: "hybrid"  # ner, keyword, hybrid
+  relationship_detection: true
+  image_analysis: true
+  max_concepts_per_file: 100
+  keyword_top_k: 20
+
+knowledge_graph_api:
+  base_url: "http://knowledge-graph:8010"
+  timeout: 30
+  retry: 3
+  batch_size: 10
+
+storage:
+  type: "local"  # or "s3"
+  path: "/data/uploads"
+  retention_days: 30
+
+processing:
+  async_mode: true
+  max_workers: 4
+  queue_size: 100
+  timeout_per_file: 600
+
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  log_level: "INFO"
+  log_format: "json"

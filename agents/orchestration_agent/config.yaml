@@ -1,0 +1,150 @@
+agent:
+  name: "orchestration_agent"
+  port: 8000
+  host: "0.0.0.0"
+  version: "1.0.0"
+  environment: "production"
+
+routing_rules:
+  - pattern: "upload_pdf"
+    target_agent: "content_ingestion_agent"
+    endpoint: "http://content-ingestion:8001/ingest"
+    timeout: 300
+    priority: 2
+  - pattern: "personalize_content"
+    target_agent: "personalization_agent"
+    endpoint: "http://personalization:8002/generate"
+    timeout: 60
+    priority: 3
+  - pattern: "build_knowledge_graph"
+    target_agent: "knowledge_graph_agent"
+    endpoint: "http://knowledge-graph:8003/build"
+    timeout: 120
+    priority: 2
+  - pattern: "generate_assessment"
+    target_agent: "assessment_agent"
+    endpoint: "http://assessment:8004/generate"
+    timeout: 90
+    priority: 3
+  - pattern: "create_visual"
+    target_agent: "visual_generation_agent"
+    endpoint: "http://visual-generation:8005/create"
+    timeout: 180
+    priority: 4
+  - pattern: "generate_audio"
+    target_agent: "audio_generation_agent"
+    endpoint: "http://audio-generation:8006/generate"
+    timeout: 240
+    priority: 4
+  - pattern: "translate_content"
+    target_agent: "translation_agent"
+    endpoint: "http://translation:8007/translate"
+    timeout: 60
+    priority: 3
+  - pattern: "create_mindmap"
+    target_agent: "mindmap_agent"
+    endpoint: "http://mindmap:8008/create"
+    timeout: 90
+    priority: 3
+  - pattern: "apply_learning_science"
+    target_agent: "learning_science_agent"
+    endpoint: "http://learning-science:8009/apply"
+    timeout: 60
+    priority: 2
+  - pattern: "track_analytics"
+    target_agent: "analytics_agent"
+    endpoint: "http://analytics:8010/track"
+    timeout: 30
+    priority: 1
+  - pattern: "coordinate_realtime"
+    target_agent: "realtime_coordination_agent"
+    endpoint: "http://realtime-coordination:8011/coordinate"
+    timeout: 15
+    priority: 1
+  - pattern: "check_content_quality"
+    target_agent: "content_quality_agent"
+    endpoint: "http://content-quality:8012/check"
+    timeout: 60
+    priority: 2
+  - pattern: "run_local_ai"
+    target_agent: "local_ai_agent"
+    endpoint: "http://local-ai:8013/run"
+    timeout: 120
+    priority: 3
+  - pattern: "cache_data"
+    target_agent: "caching_agent"
+    endpoint: "http://caching:8014/cache"
+    timeout: 10
+    priority: 1
+  - pattern: "manage_database"
+    target_agent: "database_management_agent"
+    endpoint: "http://database-management:8015/manage"
+    timeout: 60
+    priority: 2
+  - pattern: "check_security"
+    target_agent: "security_compliance_agent"
+    endpoint: "http://security-compliance:8016/check"
+    timeout: 45
+    priority: 1
+  - pattern: "run_tests"
+    target_agent: "testing_qa_agent"
+    endpoint: "http://testing-qa:8017/test"
+    timeout: 300
+    priority: 4
+  - pattern: "manage_infrastructure"
+    target_agent: "infrastructure_agent"
+    endpoint: "http://infrastructure:8018/manage"
+    timeout: 120
+    priority: 2
+
+load_balancing:
+  strategy: "round_robin"  # round_robin, least_connections, weighted
+  health_check_interval: 30
+  max_connections_per_agent: 100
+  connection_timeout: 5
+
+error_recovery:
+  max_retries: 3
+  retry_delay: 1
+  backoff_multiplier: 2
+  circuit_breaker_threshold: 5
+  circuit_breaker_timeout: 60
+  dead_letter_queue_enabled: true
+
+message_queue:
+  type: "rabbitmq"  # or "redis_pubsub"
+  host: "localhost"
+  port: 5672
+  username: "guest"
+  password: "guest"
+  exchange: "learn_your_way"
+  queue_prefix: "task_"
+  durable: true
+  auto_delete: false
+
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  log_level: "INFO"
+  enable_tracing: true
+  trace_sampling_rate: 0.1
+
+rate_limiting:
+  enabled: true
+  default_rate: 100  # requests per minute
+  burst_size: 20
+  per_agent_limits:
+    visual_generation_agent: 10
+    audio_generation_agent: 5
+    local_ai_agent: 30
+
+priority_queue:
+  enabled: true
+  max_queue_size: 10000
+  priority_levels: 5
+  high_priority_threshold: 3
+
+timeouts:
+  default_task_timeout: 300
+  health_check_timeout: 5
+  graceful_shutdown_timeout: 30

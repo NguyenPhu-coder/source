@@ -1,0 +1,42 @@
+# Base Requirements - Agents nhẹ (Orchestration, Caching, Analytics, etc.)
+# Không cần ML/AI models
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.2
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+
+# HTTP Client
+httpx==0.25.2
+aiohttp==3.9.1
+requests==2.31.0
+
+# Database - PostgreSQL
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+
+# Database - MySQL
+pymysql==1.1.0
+aiomysql==0.2.0
+
+# Database - Neo4j
+neo4j==5.14.1
+
+# Redis Cache
+redis[hiredis]==5.0.1
+
+# Message Queue
+kafka-python==2.0.2
+aiokafka==0.8.1
+
+# Utilities
+pyyaml==6.0.1
+python-dotenv==1.0.0
+structlog==23.2.0
+python-json-logger==2.0.7
+python-dateutil==2.8.2
+
+# Monitoring
+prometheus-client==0.19.0

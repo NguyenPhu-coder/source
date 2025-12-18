@@ -1,0 +1,144 @@
+agent:
+  name: "Security & Compliance Agent"
+  version: "1.0.0"
+  port: 8017
+  host: "localhost"
+
+# Authentication Configuration
+authentication:
+  jwt:
+    secret_key: "your-secret-key-change-in-production"  # Override with JWT_SECRET env var
+    algorithm: "HS256"
+    access_token_expire_minutes: 30
+    refresh_token_expire_days: 7
+  
+  session:
+    ttl_seconds: 3600
+    cookie_name: "session_token"
+    secure: true
+    httponly: true
+    samesite: "strict"
+
+# Authorization Configuration (RBAC)
+authorization:
+  rbac:
+    roles:
+      - student
+      - educator
+      - admin
+    
+    permissions:
+      student:
+        - "read:own_profile"
+        - "read:courses"
+        - "read:learning_paths"
+        - "write:own_progress"
+        - "read:own_progress"
+        - "read:ai_tutor"
+        - "write:ai_tutor"
+      
+      educator:
+        - "read:own_profile"
+        - "read:courses"
+        - "read:learning_paths"
+        - "write:own_progress"
+        - "read:own_progress"
+        - "read:ai_tutor"
+        - "write:ai_tutor"
+        - "write:courses"
+        - "write:learning_paths"
+        - "read:student_progress"
+        - "write:grading"
+        - "read:analytics"
+      
+      admin:
+        - "*"  # All permissions
+
+# Rate Limiting Configuration
+rate_limiting:
+  default:
+    requests_per_minute: 60
+    burst: 10
+  
+  by_endpoint:
+    "/auth/login": 5
+    "/auth/refresh": 10
+    "/encrypt": 30
+    "/decrypt": 30
+    "/audit-log": 20
+    "/compliance-check": 30
+
+# Encryption Configuration
+encryption:
+  algorithm: "AES-256-GCM"
+  key_rotation_days: 90
+  
+  tls:
+    enable: true
+    cert_file: "/path/to/cert.pem"
+    key_file: "/path/to/key.pem"
+    ca_file: "/path/to/ca.pem"
+
+# Compliance Configuration
+compliance:
+  gdpr:
+    enable: true
+    data_retention_days: 365
+    right_to_deletion: true
+    data_portability: true
+    consent_required: true
+  
+  coppa:
+    enable: true
+    min_age: 13
+    parental_consent_required: true
+    age_verification: true
+  
+  ferpa:
+    enable: true
+    educational_records_protection: true
+    parental_access_under_18: true
+    student_access_18_plus: true
+
+# Audit Logging Configuration
+audit:
+  log_all_requests: true
+  log_location: "./logs/audit"
+  retention_days: 90
+  
+  sensitive_fields_mask: true
+  
+  events:
+    - login
+    - logout
+    - token_refresh
+    - permission_check
+    - data_encrypted
+    - data_decrypted
+    - compliance_check
+    - rate_limit_exceeded
+    - unauthorized_access
+
+# Security Headers
+security_headers:
+  Content-Security-Policy: "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;"
+  Strict-Transport-Security: "max-age=31536000; includeSubDomains"
+  X-Content-Type-Options: "nosniff"
+  X-Frame-Options: "DENY"
+  X-XSS-Protection: "1; mode=block"
+  Referrer-Policy: "strict-origin-when-cross-origin"
+  Permissions-Policy: "geolocation=(), microphone=(), camera=()"
+
+# Redis Configuration
+redis:
+  url: "redis://localhost:6379/0"
+  max_connections: 50
+  socket_timeout: 5
+  socket_connect_timeout: 5
+
+# DDoS Protection
+ddos_protection:
+  enable: true
+  max_connections_per_ip: 100
+  connection_timeout_seconds: 30
+  blacklist_duration_minutes: 60

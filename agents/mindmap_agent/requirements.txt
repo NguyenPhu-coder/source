@@ -1,0 +1,9 @@
+# Mindmap Agent
+-r requirements-base.txt
+
+# Graph visualization
+numpy==1.24.3
+networkx==3.2.1
+Pillow==10.1.0
+svgwrite==1.4.3
+cairosvg==2.7.1

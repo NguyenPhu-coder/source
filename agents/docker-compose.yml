@@ -1,0 +1,546 @@
+# ================================================
+# Learn Your Way Platform - Docker Compose
+# All 19 agents orchestration
+# ================================================
+
+version: "3.8"
+
+services:
+  # ============================================
+  # INFRASTRUCTURE SERVICES
+  # ============================================
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: lyw-postgres
+    environment:
+      POSTGRES_USER: learnuser
+      POSTGRES_PASSWORD: learnpass
+      POSTGRES_DB: learndb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U learnuser -d learndb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lyw-network
+
+  # Neo4j Graph Database
+  neo4j:
+    image: neo4j:5.12-community
+    container_name: lyw-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/learnpass123
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:7474"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lyw-network
+
+  # Redis Cache & Message Queue
+  redis:
+    image: redis:7-alpine
+    container_name: lyw-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - lyw-network
+
+  # Kafka (Message Broker)
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: lyw-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - lyw-network
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: lyw-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - lyw-network
+
+  # MinIO (S3-compatible storage)
+  minio:
+    image: minio/minio:latest
+    container_name: lyw-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - lyw-network
+
+  # ============================================
+  # CORE AGENTS (All use root context)
+  # ============================================
+
+  orchestration-agent:
+    build:
+      context: .
+      dockerfile: orchestration_agent/Dockerfile
+    container_name: lyw-orchestration
+    ports:
+      - "8000:8000"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=learnpass123
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+    depends_on:
+      - postgres
+      - neo4j
+      - redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - lyw-network
+
+  knowledge-graph-agent:
+    build:
+      context: .
+      dockerfile: knowledge_graph_agent/Dockerfile
+    container_name: lyw-knowledge-graph
+    ports:
+      - "8010:8010"
+    environment:
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=learnpass123
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - neo4j
+      - redis
+    networks:
+      - lyw-network
+
+  content-ingestion-agent:
+    build:
+      context: .
+      dockerfile: content_ingestion_agent/Dockerfile
+    container_name: lyw-content-ingestion
+    ports:
+      - "8001:8001"
+    environment:
+      - KNOWLEDGE_GRAPH_URL=http://knowledge-graph-agent:8010
+      - REDIS_URL=redis://redis:6379
+      - S3_ENDPOINT=http://minio:9000
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin123
+    depends_on:
+      - knowledge-graph-agent
+      - redis
+      - minio
+    volumes:
+      - uploads_data:/app/uploads
+    networks:
+      - lyw-network
+
+  personalization-agent:
+    build:
+      context: .
+      dockerfile: personalization_agent/Dockerfile
+    container_name: lyw-personalization
+    ports:
+      - "8009:8009"
+    environment:
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+    networks:
+      - lyw-network
+
+  assessment-agent:
+    build:
+      context: .
+      dockerfile: assessment_agent/Dockerfile
+    container_name: lyw-assessment
+    ports:
+      - "8008:8008"
+    environment:
+      - KNOWLEDGE_GRAPH_URL=http://knowledge-graph-agent:8010
+      - PERSONALIZATION_URL=http://personalization-agent:8009
+    depends_on:
+      - knowledge-graph-agent
+      - personalization-agent
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    networks:
+      - lyw-network
+
+  analytics-agent:
+    build:
+      context: .
+      dockerfile: analytics_agent/Dockerfile
+    container_name: lyw-analytics
+    ports:
+      - "8011:8011"
+    environment:
+      - KAFKA_BROKERS=kafka:29092
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+    depends_on:
+      - kafka
+      - postgres
+    networks:
+      - lyw-network
+
+  # ============================================
+  # GENERATION AGENTS
+  # ============================================
+
+  visual-generation-agent:
+    build:
+      context: .
+      dockerfile: visual_generation_agent/Dockerfile
+    container_name: lyw-visual-gen
+    ports:
+      - "8020:8020"
+    environment:
+      - S3_ENDPOINT=http://minio:9000
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin123
+    depends_on:
+      - minio
+    deploy:
+      resources:
+        limits:
+          memory: 12G
+        reservations:
+          memory: 8G
+    networks:
+      - lyw-network
+
+  audio-generation-agent:
+    build:
+      context: .
+      dockerfile: audio_generation_agent/Dockerfile
+    container_name: lyw-audio-gen
+    ports:
+      - "8021:8021"
+    environment:
+      - S3_ENDPOINT=http://minio:9000
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin123
+    depends_on:
+      - minio
+    networks:
+      - lyw-network
+
+  translation-agent:
+    build:
+      context: .
+      dockerfile: translation_agent/Dockerfile
+    container_name: lyw-translation
+    ports:
+      - "8022:8022"
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+    networks:
+      - lyw-network
+
+  mindmap-agent:
+    build:
+      context: .
+      dockerfile: mindmap_agent/Dockerfile
+    container_name: lyw-mindmap
+    ports:
+      - "8023:8023"
+    environment:
+      - KNOWLEDGE_GRAPH_URL=http://knowledge-graph-agent:8010
+    depends_on:
+      - knowledge-graph-agent
+    networks:
+      - lyw-network
+
+  # ============================================
+  # INTELLIGENCE AGENTS
+  # ============================================
+
+  learning-science-agent:
+    build:
+      context: .
+      dockerfile: learning_science_agent/Dockerfile
+    container_name: lyw-learning-science
+    ports:
+      - "8030:8030"
+    environment:
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+    depends_on:
+      - postgres
+    networks:
+      - lyw-network
+
+  local-ai-agent:
+    build:
+      context: .
+      dockerfile: local_ai_agent/Dockerfile
+    container_name: lyw-local-ai
+    ports:
+      - "8014:8014"
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          memory: 8G
+    networks:
+      - lyw-network
+
+  content-quality-agent:
+    build:
+      context: .
+      dockerfile: content_quality_agent/Dockerfile
+    container_name: lyw-content-quality
+    ports:
+      - "8031:8031"
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    networks:
+      - lyw-network
+
+  # ============================================
+  # INFRASTRUCTURE AGENTS
+  # ============================================
+
+  caching-agent:
+    build:
+      context: .
+      dockerfile: caching_agent/Dockerfile
+    container_name: lyw-caching
+    ports:
+      - "8015:8015"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    networks:
+      - lyw-network
+
+  database-management-agent:
+    build:
+      context: .
+      dockerfile: database_management_agent/Dockerfile
+    container_name: lyw-db-management
+    ports:
+      - "8016:8016"
+    environment:
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=learnpass123
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres
+      - neo4j
+      - redis
+    networks:
+      - lyw-network
+
+  security-compliance-agent:
+    build:
+      context: .
+      dockerfile: security_compliance_agent/Dockerfile
+    container_name: lyw-security
+    ports:
+      - "8017:8017"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-super-secret-key-change-in-production
+    depends_on:
+      - redis
+    networks:
+      - lyw-network
+
+  realtime-coordination-agent:
+    build:
+      context: .
+      dockerfile: realtime_coordination_agent/Dockerfile
+    container_name: lyw-realtime
+    ports:
+      - "8018:8018"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    networks:
+      - lyw-network
+
+  infrastructure-agent:
+    build:
+      context: .
+      dockerfile: infrastructure_agent/Dockerfile
+    container_name: lyw-infrastructure
+    ports:
+      - "8019:8019"
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - lyw-network
+
+  testing-qa-agent:
+    build:
+      context: .
+      dockerfile: testing_qa_agent/Dockerfile
+    container_name: lyw-testing-qa
+    ports:
+      - "8032:8032"
+    environment:
+      - POSTGRES_URL=postgresql://learnuser:learnpass@postgres:5432/learndb
+    depends_on:
+      - postgres
+    networks:
+      - lyw-network
+
+  # ============================================
+  # MONITORING
+  # ============================================
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: lyw-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    networks:
+      - lyw-network
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: lyw-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin123
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - lyw-network
+
+  # Avatar Teacher Agent
+  avatar-teacher-agent:
+    build: ./avatar_teacher_agent
+    container_name: avatar-teacher-agent
+    ports:
+      - "8019:8019"
+    environment:
+      - PORT=8019
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=learn
+      - DB_USER=root
+      - DB_PASSWORD=learnpass
+      - AGENT_ID=avatar-teacher
+    volumes:
+      - ./avatar_teacher_agent:/app
+      - avatar_audio_cache:/tmp/avatar_audio
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import requests; requests.get('http://localhost:8019/health')",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - mysql
+      - orchestration-agent
+    networks:
+      - lyw-network
+
+# ============================================
+# VOLUMES
+# ============================================
+volumes:
+  postgres_data:
+  neo4j_data:
+  neo4j_logs:
+  redis_data:
+  minio_data:
+  uploads_data:
+  prometheus_data:
+  grafana_data:
+  avatar_audio_cache:
+
+# ============================================
+# NETWORKS
+# ============================================
+networks:
+  lyw-network:
+    driver: bridge

@@ -1,0 +1,125 @@
+agent:
+  name: "caching_agent"
+  version: "1.0.0"
+  port: 8014
+  host: "0.0.0.0"
+
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null # Set via REDIS_PASSWORD env var if needed
+  max_connections: 50
+  socket_timeout: 5
+
+cache_tiers:
+  l1:
+    type: "memory"
+    max_size_mb: 100
+    ttl: 60 # 1 minute
+
+  l2:
+    type: "redis"
+    ttl: 3600 # 1 hour
+    eviction_policy: "lru"
+
+strategies:
+  default: "write_through" # write_through, write_back, write_around
+
+  write_through:
+    sync: true
+
+  write_back:
+    batch_size: 100
+    flush_interval: 5 # seconds
+
+cache_policies:
+  personalized_content:
+    ttl: 3600 # 1 hour
+    strategy: "write_through"
+    compress: true
+
+  model_inference:
+    ttl: 86400 # 24 hours
+    strategy: "write_back"
+    compress: false
+
+  graph_queries:
+    ttl: 1800 # 30 minutes
+    strategy: "write_through"
+    compress: false
+
+  static_content:
+    ttl: 604800 # 7 days
+    strategy: "write_through"
+    compress: true
+
+  user_session:
+    ttl: 7200 # 2 hours
+    strategy: "write_through"
+    compress: false
+
+  analytics_data:
+    ttl: 43200 # 12 hours
+    strategy: "write_back"
+    compress: true
+
+invalidation:
+  methods:
+    - ttl
+    - event_based
+    - dependency_tracking
+
+  event_triggers:
+    - user_profile_update
+    - content_modification
+    - mastery_update
+
+  dependency_rules:
+    user_profile:
+      - personalized_content
+      - recommendations
+
+    content_library:
+      - content_metadata
+      - search_results
+
+    learning_progress:
+      - mastery_data
+      - analytics_dashboard
+
+compression:
+  enable: true
+  algorithm: "gzip"
+  threshold_bytes: 1024 # Compress if larger than 1KB
+  compression_level: 6 # 1-9, higher = better compression but slower
+
+monitoring:
+  track_hit_rate: true
+  track_latency: true
+  track_memory: true
+  alert_on_low_hit_rate: 0.6 # Alert if hit rate < 60%
+  alert_on_high_latency: 10 # Alert if latency > 10ms
+  metrics_interval: 60 # seconds
+
+# Key patterns for different data types
+key_patterns:
+  user_cache: "user:{user_id}:*"
+  content_cache: "content:{content_id}:*"
+  session_cache: "session:{session_id}:*"
+  query_cache: "query:{query_hash}"
+  model_cache: "model:{model_name}:*"
+
+# TTL presets by data type
+ttl_presets:
+  temporary: 300 # 5 minutes
+  short: 1800 # 30 minutes
+  medium: 3600 # 1 hour
+  long: 86400 # 24 hours
+  permanent: 604800 # 7 days
+
+# Eviction policies
+eviction:
+  l1_policy: "lru" # lru, lfu, fifo
+  l2_policy: "lru" # lru, lfu, random
+  max_memory_policy: "allkeys-lru" # Redis max memory policy

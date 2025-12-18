@@ -1,0 +1,7 @@
+# Infrastructure Agent
+-r requirements-base.txt
+
+# Infrastructure monitoring
+psutil==5.9.6
+docker==6.1.3
+kubernetes==28.1.0

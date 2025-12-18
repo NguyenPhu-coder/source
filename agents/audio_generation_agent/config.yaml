@@ -1,0 +1,102 @@
+agent:
+  name: "audio_generation_agent"
+  port: 8021
+  host: "0.0.0.0"
+  version: "1.0.0"
+
+models:
+  piper:
+    models_dir: "/models/piper"
+    sample_rate: 22050
+
+    voices:
+      - name: "en_US-lessac-medium"
+        language: "en"
+        style: "teacher"
+        description: "Professional female voice for teacher narration"
+
+      - name: "en_US-ryan-medium"
+        language: "en"
+        style: "student"
+        description: "Young male voice for student responses"
+
+      - name: "vi_VN-vivos-medium"
+        language: "vi"
+        style: "neutral"
+        description: "Vietnamese neutral voice"
+
+      - name: "en_GB-alan-medium"
+        language: "en-GB"
+        style: "narrator"
+        description: "British English narrator voice"
+
+generation:
+  sample_rate: 22050
+  output_format: "mp3" # or "ogg", "wav"
+  quality: "high" # low, medium, high
+  streaming: true
+  chunk_size: 8192
+
+narration:
+  dialogue_mode: true
+  teacher_voice: "teacher"
+  student_voice: "student"
+  pause_duration: 0.5 # seconds between speakers
+
+  # SSML support
+  ssml_enabled: true
+  default_emphasis: "moderate"
+  default_rate: "medium"
+
+processing:
+  normalize_audio: true
+  remove_silence: true
+  silence_threshold: -50 # dB
+  min_silence_length: 500 # ms
+  add_music: false
+  music_volume: 0.2
+
+  # Export settings
+  mp3_bitrate: "192k"
+  ogg_quality: 7
+
+storage:
+  type: "s3" # or "local"
+  bucket: "learn-your-way-audio"
+  cdn_url: "https://cdn.learnyourway.com/audio"
+  local_path: "./storage/audio"
+  cache_size: 500
+
+# CDN Configuration
+cdn:
+  cache_control: "public, max-age=31536000"
+  enable_cloudfront: true
+  cloudfront_distribution: "E5678EXAMPLE"
+
+# Synchronization & Transcription
+synchronization:
+  generate_transcript: true
+  word_timings: true
+  highlight_sync: true
+
+  # Forced alignment (for accurate timing)
+  use_forced_alignment: false
+  alignment_model: "gentle"
+
+# Streaming Configuration
+streaming:
+  enabled: true
+  protocol: "hls" # or "dash"
+  segment_duration: 10 # seconds
+  buffer_size: 3 # segments
+
+# Monitoring
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9091
+
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"

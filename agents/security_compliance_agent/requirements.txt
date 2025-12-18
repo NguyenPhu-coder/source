@@ -1,0 +1,7 @@
+# Security Compliance Agent
+-r requirements-base.txt
+
+# Security
+cryptography==41.0.7
+PyJWT==2.8.0
+passlib[bcrypt]==1.7.4

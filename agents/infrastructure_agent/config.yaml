@@ -1,0 +1,355 @@
+agent:
+  name: "Infrastructure Agent"
+  version: "1.0.0"
+  port: 8016
+  host: "0.0.0.0"
+
+docker:
+  socket: "/var/run/docker.sock"
+  compose_file: "./docker-compose.yml"
+  registry: "docker.io/learnyourway"
+
+kubernetes:
+  enable: false
+  kubeconfig: "~/.kube/config"
+  namespace: "learn-your-way"
+  cluster_name: "learn-your-way-cluster"
+
+monitoring:
+  prometheus:
+    url: "http://prometheus:9090"
+    scrape_interval: 15
+    retention_days: 30
+
+  metrics:
+    - cpu_usage
+    - memory_usage
+    - disk_usage
+    - network_io
+    - request_rate
+    - error_rate
+    - latency_p99
+    - latency_p95
+    - latency_p50
+
+  collection_interval: 30
+
+alerting:
+  rules:
+    - metric: "cpu_usage"
+      threshold: 80
+      duration: "5m"
+      action: "scale_up"
+      severity: "warning"
+
+    - metric: "cpu_usage"
+      threshold: 95
+      duration: "1m"
+      action: "alert"
+      severity: "critical"
+
+    - metric: "memory_usage"
+      threshold: 85
+      duration: "5m"
+      action: "alert"
+      severity: "warning"
+
+    - metric: "disk_usage"
+      threshold: 90
+      duration: "10m"
+      action: "alert"
+      severity: "critical"
+
+    - metric: "error_rate"
+      threshold: 0.05
+      duration: "1m"
+      action: "alert"
+      severity: "critical"
+
+    - metric: "latency_p99"
+      threshold: 1000
+      duration: "2m"
+      action: "alert"
+      severity: "warning"
+
+  channels:
+    slack:
+      webhook: "${SLACK_WEBHOOK}"
+      channel: "#infrastructure-alerts"
+      username: "Infrastructure Agent"
+
+    email:
+      recipients:
+        - "ops@learnyourway.com"
+        - "devops@learnyourway.com"
+      smtp_server: "${SMTP_SERVER}"
+      smtp_port: 587
+
+    pagerduty:
+      api_key: "${PAGERDUTY_KEY}"
+      service_id: "${PAGERDUTY_SERVICE_ID}"
+      escalation_policy: "infrastructure-critical"
+
+auto_scaling:
+  enable: true
+  min_replicas: 2
+  max_replicas: 10
+
+  scale_up:
+    cpu_threshold: 70
+    memory_threshold: 75
+    cooldown_seconds: 300
+    increment: 1
+
+  scale_down:
+    cpu_threshold: 30
+    memory_threshold: 40
+    cooldown_seconds: 600
+    decrement: 1
+
+  services:
+    - name: "orchestration"
+      min_replicas: 2
+      max_replicas: 8
+
+    - name: "knowledge-graph"
+      min_replicas: 2
+      max_replicas: 6
+
+    - name: "local-ai"
+      min_replicas: 1
+      max_replicas: 4
+
+    - name: "caching"
+      min_replicas: 2
+      max_replicas: 5
+
+deployment:
+  strategy: "blue_green" # rolling, blue_green, canary
+
+  rolling:
+    max_surge: 1
+    max_unavailable: 0
+    batch_size: 1
+    batch_delay_seconds: 30
+
+  blue_green:
+    health_check_timeout: 60
+    health_check_interval: 5
+    rollback_on_failure: true
+    traffic_switch_delay: 10
+
+  canary:
+    traffic_split: 10
+    duration_minutes: 15
+    success_threshold: 0.99
+    error_threshold: 0.01
+    auto_promote: true
+
+  pre_deployment:
+    backup_database: true
+    run_migrations: false
+    notify_channels: ["slack"]
+
+  post_deployment:
+    run_smoke_tests: true
+    monitor_duration_minutes: 10
+    notify_channels: ["slack", "email"]
+
+database_management:
+  postgresql:
+    host: "${POSTGRES_HOST}"
+    port: 5432
+    database: "${POSTGRES_DB}"
+    user: "${POSTGRES_USER}"
+    backup_schedule: "0 2 * * *" # Daily at 2 AM
+    backup_retention_days: 30
+    max_connections: 100
+    backup_location: "/backups/postgresql"
+
+  neo4j:
+    host: "${NEO4J_HOST}"
+    port: 7687
+    database: "neo4j"
+    backup_schedule: "0 3 * * *" # Daily at 3 AM
+    backup_retention_days: 30
+    memory_limit: "4G"
+    backup_location: "/backups/neo4j"
+
+  redis:
+    host: "${REDIS_HOST}"
+    port: 6379
+    max_memory: "2G"
+    eviction_policy: "allkeys-lru"
+    backup_schedule: "0 4 * * *" # Daily at 4 AM
+    backup_retention_days: 7
+    backup_location: "/backups/redis"
+
+  backup:
+    compression: true
+    encryption: true
+    verification: true
+    parallel_backups: false
+
+health_checks:
+  interval_seconds: 30
+  timeout_seconds: 5
+  retry_attempts: 3
+  retry_delay_seconds: 2
+
+  endpoints:
+    - name: "orchestration"
+      url: "http://orchestration:8000/health"
+      expected_status: 200
+
+    - name: "knowledge-graph"
+      url: "http://knowledge-graph:8010/health"
+      expected_status: 200
+
+    - name: "local-ai"
+      url: "http://local-ai:8014/health"
+      expected_status: 200
+
+    - name: "caching"
+      url: "http://caching:8015/health"
+      expected_status: 200
+
+    - name: "database-management"
+      url: "http://database-management:8016/health"
+      expected_status: 200
+
+    - name: "security-compliance"
+      url: "http://security-compliance:8017/health"
+      expected_status: 200
+
+    - name: "testing-qa"
+      url: "http://testing-qa:8018/health"
+      expected_status: 200
+
+performance_benchmarks:
+  orchestration_latency_ms: 50
+  graph_query_latency_ms: 100
+  model_inference_latency_ms: 500
+  cache_hit_latency_ms: 5
+  database_query_latency_ms: 20
+  api_endpoint_latency_ms: 100
+
+resource_limits:
+  orchestration:
+    cpu_limit: "2"
+    memory_limit: "4Gi"
+    cpu_request: "1"
+    memory_request: "2Gi"
+
+  knowledge_graph:
+    cpu_limit: "2"
+    memory_limit: "4Gi"
+    cpu_request: "1"
+    memory_request: "2Gi"
+
+  local_ai:
+    cpu_limit: "4"
+    memory_limit: "8Gi"
+    cpu_request: "2"
+    memory_request: "4Gi"
+
+  caching:
+    cpu_limit: "1"
+    memory_limit: "2Gi"
+    cpu_request: "0.5"
+    memory_request: "1Gi"
+
+logging:
+  level: "INFO"
+  format: "json"
+  output: "stdout"
+
+  aggregation:
+    enable: true
+    backend: "elasticsearch"
+    url: "${ELASTICSEARCH_URL}"
+    index_pattern: "infrastructure-logs-*"
+
+  retention_days: 30
+
+ci_cd:
+  integration:
+    enable: true
+    webhook_secret: "${CI_CD_WEBHOOK_SECRET}"
+
+  triggers:
+    - event: "git_push"
+      branches: ["main", "develop"]
+      action: "deploy"
+
+    - event: "git_pull_request"
+      action: "test"
+
+    - event: "manual"
+      action: "deploy"
+
+  pipelines:
+    - name: "build"
+      steps:
+        - name: "checkout"
+        - name: "build_image"
+        - name: "push_registry"
+
+    - name: "test"
+      steps:
+        - name: "unit_tests"
+        - name: "integration_tests"
+        - name: "security_scan"
+
+    - name: "deploy"
+      steps:
+        - name: "backup_database"
+        - name: "deploy_service"
+        - name: "health_check"
+        - name: "smoke_tests"
+
+network:
+  load_balancer:
+    enable: true
+    type: "nginx"
+    algorithm: "round_robin"
+    health_check_interval: 10
+
+  service_mesh:
+    enable: false
+    provider: "istio"
+
+  ingress:
+    enable: true
+    class: "nginx"
+    tls: true
+
+security:
+  container_scanning:
+    enable: true
+    scanner: "trivy"
+    severity_threshold: "HIGH"
+
+  vulnerability_management:
+    enable: true
+    scan_schedule: "0 1 * * *"
+
+  secrets_management:
+    provider: "vault"
+    url: "${VAULT_URL}"
+    token: "${VAULT_TOKEN}"
+
+disaster_recovery:
+  backup_frequency: "daily"
+  backup_locations:
+    - type: "s3"
+      bucket: "${S3_BACKUP_BUCKET}"
+      region: "${AWS_REGION}"
+
+    - type: "local"
+      path: "/backups"
+
+  rpo_hours: 24 # Recovery Point Objective
+  rto_hours: 4 # Recovery Time Objective
+
+  testing_schedule: "monthly"

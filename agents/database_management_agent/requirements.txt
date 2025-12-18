@@ -1,0 +1,42 @@
+# Database Management Agent - Minimal Requirements
+# Only essential packages for database management
+
+# Web Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.2
+pydantic-settings==2.1.0
+python-multipart==0.0.6
+
+# HTTP Client
+httpx==0.25.2
+aiohttp==3.9.1
+requests==2.31.0
+
+# PostgreSQL
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+sqlalchemy==2.0.23
+alembic==1.12.1
+
+# MySQL (để đồng bộ từ MySQL)
+pymysql==1.1.0
+aiomysql==0.2.0
+
+# Redis Cache
+redis[hiredis]==5.0.1
+
+# Neo4j (để đồng bộ sang Knowledge Graph)
+neo4j==5.14.1
+
+# Utilities
+pyyaml==6.0.1
+python-dotenv==1.0.0
+structlog==23.2.0
+python-json-logger==2.0.7
+
+# Monitoring
+prometheus-client==0.19.0
+
+# Date handling
+python-dateutil==2.8.2

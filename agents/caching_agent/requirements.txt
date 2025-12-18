@@ -1,0 +1,5 @@
+# Caching Agent - Minimal
+-r requirements-base.txt
+
+# Only needs Redis and basic web framework
+# Already included in base

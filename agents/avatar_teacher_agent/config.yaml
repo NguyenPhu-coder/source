@@ -1,0 +1,44 @@
+agent:
+  id: avatar-teacher
+  name: Avatar Teacher Agent
+  version: 1.0.0
+  description: 3D avatar-based interactive teaching with TTS and gestures
+  port: 8019
+
+tts:
+  default_language: en
+  default_speed: 1.0
+  supported_languages:
+    - en
+    - vi
+    - es
+    - fr
+    - de
+    - ja
+    - ko
+    - zh
+
+gestures:
+  enabled: true
+  auto_detect: true
+
+emotions:
+  enabled: true
+  intensity_range: [0.5, 1.0]
+
+audio:
+  format: mp3
+  quality: high
+  cache_enabled: true
+  cache_dir: /tmp/avatar_audio
+
+database:
+  host: ${DB_HOST:localhost}
+  port: ${DB_PORT:3306}
+  name: ${DB_NAME:learn}
+  user: ${DB_USER:root}
+  password: ${DB_PASSWORD:}
+
+logging:
+  level: INFO
+  format: json

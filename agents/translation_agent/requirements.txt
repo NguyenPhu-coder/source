@@ -1,0 +1,11 @@
+# Translation Agent - NEEDS Transformers
+-r requirements-base.txt
+
+# Translation models
+torch==2.1.1
+transformers==4.36.0
+tokenizers==0.15.0
+sentencepiece==0.1.99
+langdetect==1.0.9
+numpy==1.24.3
+protobuf==4.25.1

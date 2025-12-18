@@ -1,0 +1,121 @@
+agent:
+  name: "realtime_coordination_agent"
+  version: "1.0.0"
+  port: 8019
+  host: "0.0.0.0"
+  debug: false
+
+websocket:
+  max_connections: 10000
+  heartbeat_interval: 30 # seconds
+  timeout: 60 # seconds
+  compression: true
+  ping_interval: 20
+  ping_timeout: 10
+  max_message_size: 1048576 # 1MB
+
+session_management:
+  redis_url: "redis://localhost:6379"
+  redis_db: 0
+  redis_password: null
+  session_ttl: 3600 # 1 hour
+  multi_device_sync: true
+  max_devices_per_user: 5
+  session_cleanup_interval: 300 # 5 minutes
+
+synchronization:
+  conflict_resolution: "last_write_wins" # Options: last_write_wins, vector_clock
+  sync_interval: 1 # seconds
+  batch_updates: true
+  max_batch_size: 100
+  sync_timeout: 5 # seconds
+
+notifications:
+  types:
+    - milestone_achieved
+    - review_reminder
+    - peer_message
+    - achievement_unlocked
+    - intervention_alert
+
+  priority_levels:
+    - low
+    - medium
+    - high
+    - urgent
+
+  retry_attempts: 3
+  retry_delay: 5 # seconds
+  default_ttl: 86400 # 24 hours
+  max_notifications_per_user: 100
+
+collaboration:
+  enable_peer_chat: true
+  enable_study_rooms: true
+  max_room_size: 50
+  room_ttl: 86400 # 24 hours
+  max_rooms_per_user: 10
+  message_history_limit: 100
+
+push_services:
+  fcm_enabled: true
+  fcm_server_key: null # Set in environment: FCM_SERVER_KEY
+  fcm_project_id: null # Set in environment: FCM_PROJECT_ID
+
+  apns_enabled: true
+  apns_key_path: null # Path to APNS .p8 key file
+  apns_key_id: null # Set in environment: APNS_KEY_ID
+  apns_team_id: null # Set in environment: APNS_TEAM_ID
+  apns_topic: "com.learnyourway.app"
+  apns_use_sandbox: false
+
+  web_push_enabled: true
+  vapid_private_key: null # Set in environment: VAPID_PRIVATE_KEY
+  vapid_public_key: null # Set in environment: VAPID_PUBLIC_KEY
+  vapid_subject: "mailto:admin@learnyourway.com"
+
+authentication:
+  jwt_secret: "change-this-secret-key-in-production" # Set in environment: JWT_SECRET
+  jwt_algorithm: "HS256"
+  jwt_expiration: 3600 # 1 hour
+  require_auth: true
+
+presence:
+  status_ttl: 300 # 5 minutes
+  auto_away_timeout: 180 # 3 minutes
+  heartbeat_required: true
+
+logging:
+  level: "INFO" # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "json"
+  output: "stdout"
+  file: null # Optional log file path
+
+monitoring:
+  enable_metrics: true
+  metrics_port: 9090
+  enable_health_check: true
+  health_check_interval: 30
+
+performance:
+  connection_pool_size: 100
+  worker_threads: 4
+  async_queue_size: 1000
+  enable_compression: true
+  compression_level: 6
+
+security:
+  enable_rate_limiting: true
+  rate_limit_window: 60 # seconds
+  rate_limit_max_requests: 100
+  enable_cors: true
+  cors_origins:
+    - "*"
+  max_payload_size: 10485760 # 10MB
+
+redis_channels:
+  state_updates: "state_updates"
+  presence_updates: "presence_updates"
+  room_messages: "room_messages"
+  notifications: "notifications"
+  system_events: "system_events"

@@ -1,0 +1,202 @@
+# Analytics Agent Configuration
+
+agent:
+  name: "analytics_agent"
+  port: 8011
+  host: "0.0.0.0"
+
+# Event Stream Configuration
+event_stream:
+  type: "kafka"  # kafka or in_memory
+  brokers:
+    - "localhost:9092"
+  topics:
+    - "user_events"
+    - "system_events"
+  consumer_group: "analytics_group"
+
+# Metrics Configuration
+metrics:
+  tracked_events:
+    - "session_start"
+    - "session_end"
+    - "content_view"
+    - "quiz_completion"
+    - "content_completion"
+    - "time_spent"
+    - "logout"
+  
+  aggregation_intervals:
+    - "1m"   # 1 minute
+    - "5m"   # 5 minutes
+    - "1h"   # 1 hour
+    - "1d"   # 1 day
+    - "7d"   # 7 days
+    - "30d"  # 30 days
+
+# Retention Configuration
+retention:
+  calculation_method: "rolling"  # rolling or cohort
+  periods:
+    - 1    # Day 1
+    - 7    # Week 1
+    - 14   # 2 weeks
+    - 30   # Month 1
+    - 90   # Quarter 1
+  target_rate: 0.70  # 70% retention target
+
+# Prediction Configuration
+prediction:
+  models:
+    - "dropout_risk"
+    - "learning_outcome"
+  
+  dropout_risk:
+    features:
+      - "days_since_last_login"
+      - "avg_session_duration"
+      - "completion_rate"
+      - "quiz_performance"
+      - "engagement_trend"
+    
+    thresholds:
+      high: 0.7    # High risk threshold
+      medium: 0.4  # Medium risk threshold
+      low: 0.0     # Low risk threshold
+  
+  learning_outcome:
+    features:
+      - "engagement_score"
+      - "quiz_performance"
+      - "completion_rate"
+      - "time_spent"
+
+# Database Configuration
+database:
+  type: "timescaledb"  # timescaledb or in_memory
+  host: "localhost"
+  port: 5432
+  database: "analytics"
+  user: "postgres"
+  password: ""
+  
+  hypertables:
+    - name: "events"
+      time_column: "time"
+      chunk_interval: "1 day"
+    
+    - name: "metrics_1m"
+      time_column: "time"
+      chunk_interval: "7 days"
+    
+    - name: "metrics_1h"
+      time_column: "time"
+      chunk_interval: "30 days"
+
+# Dashboard Configuration
+dashboard:
+  refresh_interval: 30  # seconds
+  metrics_port: 9091
+  grafana_integration: true
+  
+  realtime_metrics:
+    - "active_users"
+    - "total_events"
+    - "retention_7d"
+    - "retention_30d"
+    - "avg_engagement_score"
+    - "high_risk_users_count"
+
+# Alerting Configuration
+alerting:
+  enabled: true
+  
+  channels:
+    email:
+      enabled: true
+      smtp_server: "smtp.gmail.com"
+      smtp_port: 587
+      from_address: "alerts@learnyourway.com"
+      to_addresses:
+        - "admin@learnyourway.com"
+    
+    slack:
+      enabled: false
+      webhook_url: ""
+      channel: "#alerts"
+    
+    sms:
+      enabled: false
+      provider: "twilio"
+      account_sid: ""
+      auth_token: ""
+      from_number: ""
+  
+  rules:
+    - name: "High Dropout Risk"
+      condition: "dropout_risk > 0.7"
+      severity: "high"
+      threshold_count: 10  # Alert if 10+ users at high risk
+      cooldown: 3600  # seconds
+    
+    - name: "Low Retention Rate"
+      condition: "retention_7d < 0.5"
+      severity: "high"
+      cooldown: 7200
+    
+    - name: "Low Engagement"
+      condition: "avg_engagement_score < 0.3"
+      severity: "medium"
+      threshold_count: 20
+      cooldown: 7200
+    
+    - name: "Anomaly Detected"
+      condition: "anomaly_z_score > 3"
+      severity: "medium"
+      cooldown: 1800
+
+# Analytics Configuration
+analytics:
+  engagement:
+    weights:
+      session_frequency: 0.3
+      content_completion: 0.3
+      quiz_performance: 0.2
+      time_spent: 0.2
+    
+    thresholds:
+      high: 0.7
+      medium: 0.4
+      low: 0.0
+  
+  velocity:
+    window_days: 7
+    target_velocity: 1.0  # 1 concept per day
+  
+  anomaly_detection:
+    method: "z_score"  # z_score, iqr, isolation_forest
+    threshold: 3.0
+    window: "1h"
+
+# Integration Configuration
+integrations:
+  knowledge_graph_api:
+    enabled: true
+    base_url: "http://localhost:8000"
+    timeout: 30
+  
+  learning_science_agent_api:
+    enabled: true
+    base_url: "http://localhost:8010"
+    timeout: 30
+
+# Monitoring Configuration
+monitoring:
+  prometheus:
+    enabled: true
+    port: 9091
+  
+  logging:
+    level: "INFO"
+    format: "json"
+    file: "logs/analytics_agent.log"
