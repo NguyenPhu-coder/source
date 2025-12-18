@@ -1,0 +1,250 @@
+.avatar-teacher {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 24px 0;
+}
+
+.teacher-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.teacher-header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #1a1a1a;
+}
+
+.ai-badge {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.teacher-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.avatar-viewport {
+    background: #f9fafb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.lesson-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.lesson-info {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.lesson-info h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.125rem;
+    color: #1a1a1a;
+}
+
+.content-preview {
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.938rem;
+}
+
+.subtitle-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.subtitle-text {
+    color: white;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    text-align: center;
+    font-weight: 500;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.3s ease;
+}
+
+.teacher-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+}
+
+.control-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.control-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.control-btn.start {
+    background: #4caf50;
+    color: white;
+}
+
+.control-btn.start:hover:not(:disabled) {
+    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.control-btn.pause {
+    background: #ff9800;
+    color: white;
+}
+
+.control-btn.pause:hover {
+    background: #f57c00;
+}
+
+.control-btn.resume {
+    background: #2196f3;
+    color: white;
+}
+
+.control-btn.resume:hover {
+    background: #1976d2;
+}
+
+.control-btn.stop {
+    background: #f44336;
+    color: white;
+}
+
+.control-btn.stop:hover {
+    background: #d32f2f;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.speed-control label {
+    font-weight: 600;
+    color: #666;
+}
+
+.speed-control select {
+    padding: 8px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.speed-control select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.speed-control select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error-message {
+    background: #ffebee;
+    color: #c62828;
+    padding: 16px;
+    border-radius: 8px;
+    border-left: 4px solid #f44336;
+    margin-top: 16px;
+}
+
+@media (max-width: 1024px) {
+    .teacher-content {
+        grid-template-columns: 1fr;
+    }
+
+    .teacher-controls {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .control-buttons {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .speed-control {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .avatar-teacher {
+        padding: 16px;
+    }
+
+    .teacher-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .control-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .control-btn {
+        width: 100%;
+    }
+}

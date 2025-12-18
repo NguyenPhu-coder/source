@@ -1,0 +1,39 @@
+{
+  "common": {
+    "success": "Success",
+    "error": "Error",
+    "notFound": "Not found",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden",
+    "invalidCredentials": "Invalid credentials",
+    "serverError": "Internal server error"
+  },
+  "categories": {
+    "technology": "Technology",
+    "business": "Business",
+    "design": "Design",
+    "marketing": "Marketing",
+    "personalDevelopment": "Personal Development",
+    "healthWellness": "Health & Wellness"
+  },
+  "difficulty": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "course": {
+    "enrolled": "Enrolled",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "notEnrolled": "Not Enrolled"
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Email is invalid",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "nameRequired": "Name is required",
+    "titleRequired": "Title is required",
+    "descriptionRequired": "Description is required"
+  }
+}

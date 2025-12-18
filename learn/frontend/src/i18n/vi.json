@@ -1,0 +1,642 @@
+{
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Sửa",
+    "search": "Tìm kiếm",
+    "filter": "Lọc",
+    "sort": "Sắp xếp",
+    "processing": "Đang xử lý..."
+  },
+  "header": {
+    "logo": "LearnHub",
+    "courses": "Khóa học",
+    "categories": "Danh mục",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "signOut": "Đăng xuất"
+  },
+  "footer": {
+    "brand": "LearnHub",
+    "tagline": "Trao quyền cho người học trên toàn thế giới với giáo dục chất lượng",
+    "courses": "Khóa học",
+    "allCourses": "Tất cả khóa học",
+    "popular": "Phổ biến",
+    "new": "Khóa học mới",
+    "company": "Công ty",
+    "aboutUs": "Về chúng tôi",
+    "careers": "Tuyển dụng",
+    "blog": "Blog",
+    "support": "Hỗ trợ",
+    "helpCenter": "Trung tâm trợ giúp",
+    "contactUs": "Liên hệ",
+    "faq": "Câu hỏi thường gặp",
+    "legal": "Pháp lý",
+    "privacyPolicy": "Chính sách bảo mật",
+    "termsOfService": "Điều khoản dịch vụ",
+    "cookiePolicy": "Chính sách cookie",
+    "copyright": "© 2025 LearnHub. Bảo lưu mọi quyền.",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "facebook": "Facebook"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "courses": "Khóa học",
+    "dashboard": "Bảng điều khiển",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất"
+  },
+  "language": {
+    "selectLanguage": "Chọn ngôn ngữ",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt",
+    "japanese": "Tiếng Nhật"
+  },
+  "hero": {
+    "title": "Học bất cứ thứ gì, bất cứ lúc nào",
+    "subtitle": "Khám phá hàng nghìn khóa học được giảng dạy bởi các giảng viên chuyên nghiệp",
+    "cta": "Bắt đầu",
+    "headline": "Nắm vững kỹ năng mới với",
+    "highlightedText": "Khóa học chuyên gia",
+    "subtext": "Tham gia cùng hàng nghìn học viên học từ các chuyên gia trong ngành. Bắt đầu hành trình thành công của bạn ngay hôm nay.",
+    "browseCoursesBtn": "Khám phá ngay",
+    "startLearningBtn": "Bắt đầu học miễn phí",
+    "learnMore": "Tìm hiểu thêm",
+    "badge": "Nền tảng học trực tuyến hàng đầu",
+    "activeStudents": "Học viên tích cực",
+    "expertCourses": "Khóa học chuyên gia",
+    "averageRating": "Đánh giá trung bình"
+  },
+  "search": {
+    "placeholder": "Tìm kiếm khóa học...",
+    "title": "Tìm khóa học phù hợp",
+    "subtitle": "Khám phá hàng nghìn khóa học chất lượng cao",
+    "button": "Tìm kiếm"
+  },
+  "categories": {
+    "title": "Khám phá theo danh mục",
+    "subtitle": "Tìm khóa học hoàn hảo cho mục tiêu học tập của bạn",
+    "description": "Chọn từ {count} khóa học do chuyên gia hướng dẫn",
+    "badge": "Danh mục phổ biến",
+    "course": "khóa học",
+    "courses": "khóa học"
+  },
+  "popularCourses": {
+    "title": "Khóa học phổ biến",
+    "subtitle": "Tham gia các khóa học phổ biến nhất và bắt đầu học ngay hôm nay",
+    "badge": "Xu hướng",
+    "viewAll": "Xem tất cả khóa học",
+    "lessons": "bài học",
+    "difficulty": {
+      "beginner": "Cơ bản",
+      "intermediate": "Trung cấp",
+      "advanced": "Nâng cao"
+    }
+  },
+  "testimonials": {
+    "title": "Học viên nói gì về chúng tôi",
+    "subtitle": "Hàng nghìn học viên đã thay đổi sự nghiệp của họ",
+    "badge": "Phản hồi từ học viên"
+  },
+  "cta": {
+    "title": "Sẵn sàng bắt đầu hành trình học tập của bạn?",
+    "subtitle": "Tham gia cùng hàng nghìn học viên đang học từ các chuyên gia hàng đầu",
+    "badge": "Bắt đầu ngay hôm nay",
+    "startFreeTrialBtn": "Bắt đầu miễn phí",
+    "explorePricingBtn": "Khám phá khóa học",
+    "noCreditCard": "Không cần thẻ tín dụng",
+    "cancelAnytime": "Hủy bất cứ lúc nào",
+    "note": "Không cần thẻ tín dụng • Hủy bất cứ lúc nào"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "subtitle": "Xin lỗi, chúng tôi không thể tìm thấy trang bạn đang tìm kiếm.",
+    "returnHome": "Trở về trang chủ"
+  },
+  "coursesPage": {
+    "title": "Tất cả khóa học",
+    "filters": "Bộ lọc",
+    "search": "Tìm kiếm",
+    "searchPlaceholder": "Tìm kiếm khóa học...",
+    "difficulty": "Độ khó",
+    "allLevels": "Tất cả cấp độ",
+    "sortBy": "Sắp xếp theo",
+    "mostPopular": "Phổ biến nhất",
+    "highestRated": "Đánh giá cao nhất",
+    "priceLowToHigh": "Giá: Thấp đến cao",
+    "priceHighToLow": "Giá: Cao đến thấp",
+    "noResults": "Không tìm thấy khóa học",
+    "noResultsText": "Thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm",
+    "viewCourse": "Xem khóa học"
+  },
+  "courseDetail": {
+    "enrollNow": "Đăng ký ngay",
+    "enrollFree": "Đăng ký miễn phí",
+    "enrolled": "Đã đăng ký - Đến Dashboard",
+    "overview": "Tổng quan",
+    "curriculum": "Chương trình học",
+    "reviews": "Đánh giá",
+    "whatYouWillLearn": "Bạn sẽ học được gì",
+    "courseDetails": "Chi tiết khóa học",
+    "hoursOfContent": "giờ nội dung video",
+    "difficulty": "Độ khó",
+    "certificate": "Chứng chỉ",
+    "uponCompletion": "Chứng chỉ khi hoàn thành",
+    "aboutTheInstructor": "Về giảng viên",
+    "notFound": "Không tìm thấy khóa học",
+    "students": "học viên",
+    "instructor": "Giảng viên",
+    "goToDashboard": "Đến Dashboard",
+    "free": "Miễn phí",
+    "noLessons": "Chưa có bài học",
+    "noReviews": "Chưa có đánh giá",
+    "confirmEnrollment": "Xác nhận đăng ký",
+    "confirmEnrollmentDesc": "Bạn sắp đăng ký khóa học này",
+    "coursePrice": "Giá khóa học",
+    "paymentNote": "Thông tin thanh toán",
+    "paymentNoteDesc": "Đây là phiên bản demo. Trong thực tế, cổng thanh toán sẽ được tích hợp tại đây.",
+    "whatsIncluded": "Những gì bao gồm:",
+    "lifetimeAccess": "Truy cập trọn đời vào tài liệu khóa học",
+    "certificateCompletion": "Chứng chỉ hoàn thành",
+    "accessAllDevices": "Truy cập trên mọi thiết bị",
+    "confirmAndPay": "Xác nhận & Thanh toán",
+    "confirmEnroll": "Xác nhận đăng ký",
+    "pleaseLogin": "Vui lòng đăng nhập để đăng ký khóa học",
+    "enrollSuccess": "Đăng ký khóa học thành công!",
+    "enrollError": "Đăng ký khóa học thất bại",
+    "alreadyEnrolled": "Bạn đã đăng ký khóa học này rồi",
+    "courseNotFound": "Không tìm thấy khóa học"
+  },
+  "course": {
+    "title": "Khóa học",
+    "description": "Mô tả",
+    "instructor": "Giảng viên",
+    "duration": "Thời lượng",
+    "level": "Cấp độ",
+    "price": "Giá",
+    "enroll": "Đăng ký ngay",
+    "enrolled": "Đã đăng ký",
+    "students": "học viên",
+    "lessons": "bài học",
+    "rating": "Đánh giá",
+    "reviews": "Nhận xét"
+  },
+  "dashboard": {
+    "title": "Bảng điều khiển",
+    "myCourses": "Khóa học của tôi",
+    "certificates": "Chứng chỉ",
+    "settings": "Cài đặt",
+    "welcomeTitle": "Chào mừng trở lại, {name}!",
+    "welcomeSubtitle": "Tiếp tục hành trình học tập của bạn",
+    "signOut": "Đăng xuất",
+    "coursesEnrolled": "Khóa học đã đăng ký",
+    "completed": "Đã hoàn thành",
+    "avgProgress": "Tiến độ TB",
+    "progress": "Tiến độ",
+    "continue": "Tiếp tục",
+    "viewCertificate": "Xem chứng chỉ",
+    "noCertificates": "Chưa có chứng chỉ",
+    "noCourses": "Chưa đăng ký khóa học nào",
+    "accountSettings": "Cài đặt tài khoản",
+    "email": "Email",
+    "fullName": "Họ tên đầy đủ",
+    "preferences": "Tùy chọn",
+    "emailRecommendations": "Nhận đề xuất qua email",
+    "notifyNewCourses": "Thông báo khóa học mới",
+    "dangerZone": "Vùng nguy hiểm",
+    "deleteAccount": "Xóa tài khoản",
+    "inProgress": "Đang học",
+    "notStarted": "Chưa bắt đầu",
+    "lessons": "bài học",
+    "minutes": "phút",
+    "completedOn": "Hoàn thành vào {date}"
+  },
+  "auth": {
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "signIn": "Đăng nhập",
+    "signUp": "Đăng ký",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "confirmPassword": "Xác nhận mật khẩu",
+    "name": "Họ tên",
+    "fullName": "Họ tên đầy đủ",
+    "forgotPassword": "Quên mật khẩu?",
+    "dontHaveAccount": "Chưa có tài khoản?",
+    "alreadyHaveAccount": "Đã có tài khoản?",
+    "loginDescription": "Nhập thông tin đăng nhập để truy cập tài khoản",
+    "registerDescription": "Tạo tài khoản mới để bắt đầu",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Nhập mật khẩu",
+    "confirmPasswordPlaceholder": "Xác nhận mật khẩu",
+    "fullNamePlaceholder": "Nguyễn Văn A",
+    "emailRequired": "Vui lòng nhập email",
+    "emailInvalid": "Email không hợp lệ",
+    "passwordRequired": "Vui lòng nhập mật khẩu",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu",
+    "passwordMismatch": "Mật khẩu không khớp",
+    "fullNameRequired": "Vui lòng nhập họ tên",
+    "fullNameMinLength": "Họ tên phải có ít nhất 2 ký tự",
+    "loginError": "Đăng nhập thất bại. Vui lòng thử lại.",
+    "registerError": "Đăng ký thất bại. Vui lòng thử lại.",
+    "googleLoginError": "Xác thực Google thất bại. Vui lòng thử lại.",
+    "orContinueWith": "Hoặc tiếp tục với"
+  },
+  "categoriesPage": {
+    "title": "Khám Phá Danh Mục Khóa Học",
+    "subtitle": "Tìm hiểu nhiều chủ đề và chọn khóa học phù hợp nhất cho bạn",
+    "programming": {
+      "title": "Lập Trình & Phát Triển",
+      "description": "Học lập trình, phát triển web, ứng dụng di động và kỹ thuật phần mềm",
+      "courseCount": "150+ khóa học"
+    },
+    "design": {
+      "title": "Thiết Kế & Sáng Tạo",
+      "description": "Nắm vững thiết kế đồ họa, UI/UX, minh họa và kỹ năng sáng tạo",
+      "courseCount": "120+ khóa học"
+    },
+    "business": {
+      "title": "Kinh Doanh & Quản Lý",
+      "description": "Phát triển kỹ năng lãnh đạo, khởi nghiệp và chiến lược kinh doanh",
+      "courseCount": "100+ khóa học"
+    },
+    "marketing": {
+      "title": "Marketing & Bán Hàng",
+      "description": "Học marketing kỹ thuật số, mạng xã hội, SEO và kỹ thuật bán hàng",
+      "courseCount": "90+ khóa học"
+    },
+    "photography": {
+      "title": "Nhiếp Ảnh & Video",
+      "description": "Nắm vững kỹ năng máy ảnh, biên tập video và kể chuyện bằng hình ảnh",
+      "courseCount": "80+ khóa học"
+    },
+    "science": {
+      "title": "Khoa Học & Công Nghệ",
+      "description": "Khám phá các môn STEM, khoa học dữ liệu, AI và đổi mới",
+      "courseCount": "110+ khóa học"
+    },
+    "language": {
+      "title": "Ngôn Ngữ & Giao Tiếp",
+      "description": "Học ngôn ngữ mới và cải thiện kỹ năng giao tiếp",
+      "courseCount": "70+ khóa học"
+    },
+    "career": {
+      "title": "Phát Triển Sự Nghiệp",
+      "description": "Xây dựng kỹ năng chuyên nghiệp, viết CV và chuẩn bị phỏng vấn",
+      "courseCount": "60+ khóa học"
+    },
+    "cta": {
+      "title": "Không tìm thấy khóa học bạn cần?",
+      "subtitle": "Duyệt tất cả khóa học hoặc liên hệ để nhận gợi ý cá nhân hóa",
+      "button": "Xem Tất Cả Khóa Học"
+    }
+  },
+  "aboutPage": {
+    "hero": {
+      "title": "Về LearnHub",
+      "subtitle": "Trao quyền cho người học trên toàn thế giới với giáo dục chất lượng"
+    },
+    "mission": {
+      "title": "Sứ Mệnh Của Chúng Tôi",
+      "content1": "Tại LearnHub, chúng tôi tin rằng giáo dục nên được tiếp cận bởi tất cả mọi người, ở mọi nơi. Sứ mệnh của chúng tôi là cung cấp các khóa học trực tuyến chất lượng cao, giá cả phải chăng giúp mọi người đạt được mục tiêu cá nhân và nghề nghiệp.",
+      "content2": "Chúng tôi hợp tác với các giảng viên và tổ chức tốt nhất thế giới để mang đến cho bạn những khóa học hấp dẫn, thực tế và được thiết kế để giúp bạn thành công trong thế giới hiện đại."
+    },
+    "stats": {
+      "title": "Tác Động Của Chúng Tôi",
+      "students": {
+        "number": "1 Triệu+",
+        "label": "Học Viên Đang Hoạt Động"
+      },
+      "courses": {
+        "number": "500+",
+        "label": "Khóa Học Chuyên Gia"
+      },
+      "instructors": {
+        "number": "200+",
+        "label": "Giảng Viên Hàng Đầu"
+      },
+      "countries": {
+        "number": "150+",
+        "label": "Quốc Gia Tiếp Cận"
+      }
+    },
+    "values": {
+      "title": "Giá Trị Cốt Lõi",
+      "quality": {
+        "title": "Giáo Dục Chất Lượng",
+        "description": "Chúng tôi duy trì tiêu chuẩn cao nhất trong nội dung và giảng dạy"
+      },
+      "accessibility": {
+        "title": "Khả Năng Tiếp Cận",
+        "description": "Học tập nên có sẵn cho mọi người, bất kể vị trí hay xuất thân"
+      },
+      "innovation": {
+        "title": "Đổi Mới",
+        "description": "Chúng tôi liên tục cải thiện nền tảng và phương pháp học tập"
+      },
+      "community": {
+        "title": "Cộng Đồng",
+        "description": "Chúng tôi tạo môi trường hỗ trợ cho người học và giảng viên"
+      }
+    },
+    "team": {
+      "title": "Gặp Gỡ Đội Ngũ",
+      "ceo": {
+        "name": "Sarah Johnson",
+        "position": "CEO & Người Sáng Lập",
+        "bio": "Cựu nhà giáo dục với 15 năm kinh nghiệm trong học trực tuyến"
+      },
+      "cto": {
+        "name": "Michael Chen",
+        "position": "Giám Đốc Công Nghệ",
+        "bio": "Chuyên gia công nghệ với kinh nghiệm trong EdTech và phát triển nền tảng"
+      },
+      "cmo": {
+        "name": "Emily Rodriguez",
+        "position": "Giám Đốc Marketing",
+        "bio": "Chuyên gia marketing đam mê làm cho giáo dục dễ tiếp cận"
+      },
+      "coo": {
+        "name": "David Kim",
+        "position": "Giám Đốc Vận Hành",
+        "bio": "Lãnh đạo vận hành tận tụy mang đến trải nghiệm học tập xuất sắc"
+      }
+    },
+    "cta": {
+      "title": "Tham Gia Cộng Đồng Học Tập",
+      "subtitle": "Bắt đầu hành trình học tập ngay hôm nay cùng hàng nghìn học viên trên toàn thế giới",
+      "button": "Bắt Đầu Miễn Phí"
+    }
+  },
+  "contactPage": {
+    "hero": {
+      "title": "Liên Hệ Với Chúng Tôi",
+      "subtitle": "Có câu hỏi? Chúng tôi rất mong được nghe từ bạn. Gửi tin nhắn và chúng tôi sẽ phản hồi sớm nhất có thể."
+    },
+    "form": {
+      "title": "Gửi Tin Nhắn",
+      "subtitle": "Điền form bên dưới và đội ngũ của chúng tôi sẽ phản hồi trong vòng 24 giờ",
+      "name": "Họ Tên Đầy Đủ",
+      "namePlaceholder": "Nguyễn Văn A",
+      "nameRequired": "Vui lòng nhập họ tên",
+      "email": "Địa Chỉ Email",
+      "emailPlaceholder": "you@example.com",
+      "emailRequired": "Vui lòng nhập email",
+      "emailInvalid": "Email không hợp lệ",
+      "subject": "Tiêu Đề",
+      "subjectPlaceholder": "Chúng tôi có thể giúp gì cho bạn?",
+      "subjectRequired": "Vui lòng nhập tiêu đề",
+      "message": "Nội Dung",
+      "messagePlaceholder": "Cho chúng tôi biết thêm về yêu cầu của bạn...",
+      "messageRequired": "Vui lòng nhập nội dung",
+      "messageMinLength": "Nội dung phải có ít nhất 10 ký tự",
+      "submit": "Gửi Tin Nhắn",
+      "successMessage": "Cảm ơn bạn! Tin nhắn đã được gửi thành công. Chúng tôi sẽ phản hồi sớm."
+    },
+    "info": {
+      "title": "Thông Tin Liên Hệ",
+      "email": {
+        "label": "Email",
+        "value": "support@learnhub.com"
+      },
+      "phone": {
+        "label": "Điện Thoại",
+        "value": "+84 (28) 1234-5678"
+      },
+      "address": {
+        "label": "Địa Chỉ",
+        "value": "123 Đường Học Tập, Thành Phố Giáo Dục, TP.HCM"
+      },
+      "hours": {
+        "label": "Giờ Làm Việc",
+        "value": "Thứ 2 - Thứ 6: 9:00 - 18:00"
+      }
+    },
+    "faq": {
+      "title": "Câu Hỏi Thường Gặp",
+      "q1": {
+        "question": "Mất bao lâu để nhận được phản hồi?",
+        "answer": "Chúng tôi thường phản hồi tất cả yêu cầu trong vòng 24 giờ trong ngày làm việc. Với vấn đề khẩn cấp, vui lòng gọi điện trực tiếp."
+      },
+      "q2": {
+        "question": "Tôi có thể đặt lịch gọi với đội ngũ không?",
+        "answer": "Có! Vui lòng đề cập trong tin nhắn rằng bạn muốn đặt lịch gọi, và chúng tôi sẽ gửi cho bạn các khung giờ có sẵn."
+      },
+      "q3": {
+        "question": "Có hỗ trợ kỹ thuật không?",
+        "answer": "Chắc chắn rồi! Đội hỗ trợ kỹ thuật sẵn sàng giúp bạn với mọi vấn đề liên quan đến nền tảng. Vui lòng cung cấp chi tiết vấn đề trong form."
+      }
+    }
+  },
+  "admin": {
+    "panel": "Trang Quản Trị",
+    "dashboard": "Bảng Điều Khiển",
+    "analytics": "Phân Tích",
+    "users": "Người Dùng",
+    "courses": "Khóa Học",
+    "courseApprovals": "Duyệt Khóa Học",
+    "lessons": "Bài Học",
+    "categories": "Danh Mục",
+    "enrollments": "Đăng Ký Học",
+    "refunds": "Hoàn Tiền",
+    "serverMonitor": "Giám Sát Server",
+    "orders": "Đơn Hàng",
+    "reviews": "Đánh Giá",
+    "settings": "Cài Đặt",
+    "statistics": {
+      "totalUsers": "Tổng Người Dùng",
+      "totalCourses": "Tổng Khóa Học",
+      "totalEnrollments": "Tổng Đăng Ký",
+      "recentUsers": "Người Dùng Mới",
+      "publishedCourses": "Khóa Đã Xuất Bản",
+      "completedEnrollments": "Hoàn Thành"
+    },
+    "navbar": {
+      "search": "Tìm kiếm người dùng, khóa học, bài học...",
+      "notifications": "Thông Báo",
+      "profile": "Hồ Sơ",
+      "logout": "Đăng Xuất",
+      "darkMode": "Chế Độ Tối",
+      "lightMode": "Chế Độ Sáng"
+    },
+    "topCourses": "Khóa Học Hàng Đầu",
+    "userGrowth": "Tăng Trưởng Người Dùng",
+    "students": "học viên",
+    "newUserRegistered": "Người dùng mới đăng ký",
+    "coursePublished": "Khóa học đã xuất bản",
+    "minutesAgo": "phút trước",
+    "hourAgo": "giờ trước",
+    "hoursAgo": "giờ trước",
+    "coursesPage": {
+      "title": "Quản Lý Khóa Học",
+      "searchPlaceholder": "Tìm kiếm khóa học...",
+      "searchButton": "Tìm kiếm",
+      "filterAll": "Tất cả",
+      "filterPublished": "Đã xuất bản",
+      "filterDraft": "Bản nháp",
+      "refresh": "Làm mới",
+      "tableHeaders": {
+        "id": "ID",
+        "title": "Tiêu đề",
+        "instructor": "Giảng viên",
+        "category": "Danh mục",
+        "enrollments": "Đăng ký",
+        "rating": "Đánh giá",
+        "status": "Trạng thái",
+        "actions": "Thao tác"
+      },
+      "published": "Đã xuất bản",
+      "draft": "Bản nháp",
+      "publish": "Xuất bản",
+      "unpublish": "Hủy xuất bản",
+      "delete": "Xóa",
+      "confirmPublish": "Bạn có chắc muốn xuất bản khóa học này?",
+      "confirmUnpublish": "Bạn có chắc muốn hủy xuất bản khóa học này?",
+      "confirmDelete": "Bạn có chắc muốn xóa khóa học này?",
+      "pagination": {
+        "previous": "Trước",
+        "next": "Sau",
+        "showing": "Hiển thị",
+        "to": "đến",
+        "of": "trong tổng số",
+        "results": "kết quả"
+      }
+    },
+    "usersPage": {
+      "title": "Quản Lý Người Dùng",
+      "searchPlaceholder": "Tìm kiếm người dùng...",
+      "searchButton": "Tìm kiếm",
+      "filterAll": "Tất cả vai trò",
+      "filterAdmin": "Quản trị viên",
+      "filterInstructor": "Giảng viên",
+      "filterStudent": "Học viên",
+      "refresh": "Làm mới",
+      "tableHeaders": {
+        "id": "ID",
+        "name": "Tên",
+        "email": "Email",
+        "role": "Vai trò",
+        "points": "Điểm",
+        "createdAt": "Ngày tạo",
+        "actions": "Thao tác"
+      },
+      "roles": {
+        "admin": "Quản trị viên",
+        "instructor": "Giảng viên",
+        "student": "Học viên"
+      },
+      "changeRole": "Đổi vai trò",
+      "delete": "Xóa",
+      "confirmDelete": "Bạn có chắc muốn xóa người dùng này?"
+    },
+    "lessonsPage": {
+      "title": "Quản Lý Bài Học",
+      "searchPlaceholder": "Tìm kiếm bài học...",
+      "addLesson": "Thêm bài học",
+      "tableHeaders": {
+        "id": "ID",
+        "title": "Tiêu đề",
+        "course": "Khóa học",
+        "order": "Thứ tự",
+        "type": "Loại",
+        "duration": "Thời lượng",
+        "actions": "Thao tác"
+      },
+      "types": {
+        "video": "Video",
+        "article": "Bài viết",
+        "quiz": "Trắc nghiệm"
+      },
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "confirmDelete": "Bạn có chắc muốn xóa bài học này?",
+      "addModal": {
+        "title": "Thêm Bài Học Mới",
+        "courseId": "ID Khóa Học",
+        "lessonTitle": "Tiêu Đề",
+        "content": "Nội Dung",
+        "videoUrl": "URL Video (tùy chọn)",
+        "duration": "Thời Lượng (phút)",
+        "order": "Thứ Tự",
+        "cancel": "Hủy",
+        "create": "Tạo"
+      }
+    },
+    "categoriesPage": {
+      "title": "Quản Lý Danh Mục",
+      "addCategory": "Thêm danh mục",
+      "tableHeaders": {
+        "id": "ID",
+        "name": "Tên",
+        "icon": "Biểu tượng",
+        "courses": "Số khóa học",
+        "actions": "Thao tác"
+      },
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "confirmDelete": "Bạn có chắc muốn xóa danh mục này?"
+    },
+    "enrollmentsPage": {
+      "title": "Quản Lý Đăng Ký",
+      "searchPlaceholder": "Tìm kiếm đăng ký...",
+      "filterAll": "Tất cả",
+      "filterActive": "Đang học",
+      "filterCompleted": "Hoàn thành",
+      "export": "Xuất CSV",
+      "tableHeaders": {
+        "id": "ID",
+        "student": "Học viên",
+        "course": "Khóa học",
+        "progress": "Tiến độ",
+        "status": "Trạng thái",
+        "enrolledAt": "Ngày đăng ký",
+        "actions": "Thao tác"
+      },
+      "active": "Đang học",
+      "completed": "Hoàn thành",
+      "view": "Xem",
+      "delete": "Xóa"
+    },
+    "reviewsPage": {
+      "title": "Quản Lý Đánh Giá",
+      "filterAll": "Tất cả",
+      "filterApproved": "Đã duyệt",
+      "filterPending": "Chờ duyệt",
+      "tableHeaders": {
+        "id": "ID",
+        "student": "Học viên",
+        "course": "Khóa học",
+        "rating": "Đánh giá",
+        "comment": "Bình luận",
+        "status": "Trạng thái",
+        "actions": "Thao tác"
+      },
+      "approved": "Đã duyệt",
+      "pending": "Chờ duyệt",
+      "approve": "Duyệt",
+      "reject": "Từ chối",
+      "delete": "Xóa"
+    },
+    "settingsPage": {
+      "title": "Cài Đặt Hệ Thống",
+      "general": "Cài đặt chung",
+      "email": "Cài đặt Email",
+      "backup": "Sao lưu & Phục hồi",
+      "siteName": "Tên website",
+      "siteDescription": "Mô tả website",
+      "saveChanges": "Lưu thay đổi",
+      "emailTemplates": "Mẫu Email",
+      "backupDatabase": "Sao lưu cơ sở dữ liệu",
+      "restoreDatabase": "Phục hồi cơ sở dữ liệu"
+    }
+  }
+}

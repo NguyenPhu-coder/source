@@ -1,0 +1,256 @@
+.analytics-dashboard {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 24px 0;
+}
+
+.analytics-dashboard.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    gap: 16px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.dashboard-header h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #1a1a1a;
+}
+
+.refresh-btn {
+    padding: 8px 16px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.refresh-btn:hover {
+    background: #5568d3;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 20px;
+    border-top: 4px solid #667eea;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-content h4 {
+    margin: 0 0 8px 0;
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+}
+
+.stat-trend {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.stat-trend.up {
+    color: #4caf50;
+}
+
+.stat-trend.down {
+    color: #f44336;
+}
+
+.engagement-chart {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.engagement-chart h3 {
+    margin: 0 0 20px 0;
+    color: #1a1a1a;
+}
+
+.chart-bars {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    height: 200px;
+}
+
+.bar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 100%;
+}
+
+.bar {
+    width: 100%;
+    background: #667eea;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    min-height: 30px;
+}
+
+.bar:hover {
+    opacity: 0.8;
+    transform: scaleY(1.05);
+}
+
+.bar-value {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+}
+
+.bar-label {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.dropout-alert {
+    background: #fff5f5;
+    border-left: 4px solid #f44336;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 24px;
+}
+
+.alert-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.alert-icon {
+    font-size: 1.5rem;
+}
+
+.alert-header h4 {
+    flex: 1;
+    margin: 0;
+    color: #d32f2f;
+    font-size: 1.125rem;
+}
+
+.risk-score {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #d32f2f;
+}
+
+.risk-factors,
+.interventions {
+    margin-top: 16px;
+}
+
+.risk-factors strong,
+.interventions strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.risk-factors ul,
+.interventions ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.risk-factors li,
+.interventions li {
+    margin: 6px 0;
+    color: #555;
+    line-height: 1.5;
+}
+
+.no-data {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.no-data p {
+    font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .chart-bars {
+        gap: 8px;
+    }
+
+    .bar-value {
+        font-size: 0.625rem;
+    }
+}

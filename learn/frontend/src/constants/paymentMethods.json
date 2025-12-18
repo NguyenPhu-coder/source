@@ -1,0 +1,32 @@
+[
+    {
+        "id": "wallet",
+        "name": "Ví của tôi (My Wallet)",
+        "description": "Thanh toán nhanh bằng số dư ví",
+        "icon": "Wallet"
+    },
+    {
+        "id": "momo",
+        "name": "Ví MoMo",
+        "description": "Thanh toán qua ví điện tử MoMo",
+        "icon": "Smartphone"
+    },
+    {
+        "id": "vnpay",
+        "name": "VNPay QR",
+        "description": "Quét mã QR qua ứng dụng ngân hàng",
+        "icon": "QrCode"
+    },
+    {
+        "id": "stripe",
+        "name": "Thẻ tín dụng / Ghi nợ",
+        "description": "Visa, Mastercard, Amex",
+        "icon": "CreditCard"
+    },
+    {
+        "id": "bank_transfer",
+        "name": "Chuyển khoản ngân hàng",
+        "description": "Chuyển khoản trực tiếp tới tài khoản công ty",
+        "icon": "Building"
+    }
+]

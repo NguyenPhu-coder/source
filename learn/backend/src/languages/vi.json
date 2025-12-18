@@ -1,0 +1,39 @@
+{
+  "common": {
+    "success": "Thành công",
+    "error": "Lỗi",
+    "notFound": "Không tìm thấy",
+    "unauthorized": "Chưa xác thực",
+    "forbidden": "Không có quyền truy cập",
+    "invalidCredentials": "Thông tin đăng nhập không hợp lệ",
+    "serverError": "Lỗi máy chủ nội bộ"
+  },
+  "categories": {
+    "technology": "Công nghệ",
+    "business": "Kinh doanh",
+    "design": "Thiết kế",
+    "marketing": "Marketing",
+    "personalDevelopment": "Phát triển cá nhân",
+    "healthWellness": "Sức khỏe & Thể chất"
+  },
+  "difficulty": {
+    "beginner": "Cơ bản",
+    "intermediate": "Trung cấp",
+    "advanced": "Nâng cao"
+  },
+  "course": {
+    "enrolled": "Đã đăng ký",
+    "completed": "Đã hoàn thành",
+    "inProgress": "Đang học",
+    "notEnrolled": "Chưa đăng ký"
+  },
+  "validation": {
+    "emailRequired": "Email là bắt buộc",
+    "emailInvalid": "Email không hợp lệ",
+    "passwordRequired": "Mật khẩu là bắt buộc",
+    "passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+    "nameRequired": "Tên là bắt buộc",
+    "titleRequired": "Tiêu đề là bắt buộc",
+    "descriptionRequired": "Mô tả là bắt buộc"
+  }
+}

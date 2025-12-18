@@ -1,0 +1,70 @@
+.avatar-3d-viewer {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #f5f7fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 16px;
+    color: #666;
+}
+
+.error-icon {
+    font-size: 3rem;
+}
+
+.avatar-status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-badge.gesture {
+    background: rgba(102, 126, 234, 0.9);
+    color: white;
+}
+
+.status-badge.emotion {
+    background: rgba(76, 175, 80, 0.9);
+    color: white;
+}
+
+/* Loading animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
